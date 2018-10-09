@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "836617906143",
+    "firebase_url": "https://salesxc-8007c.firebaseio.com",
+    "project_id": "salesxc-8007c",
+    "storage_bucket": "salesxc-8007c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:836617906143:android:db6bc2b93f85fcb1",
+        "android_client_info": {
+          "package_name": "com.example.shivam97.sales_xc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "836617906143-22tqqvrdn3tiiqf93ugr5vl7gkl3gkff.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shivam97.sales_xc",
+            "certificate_hash": "b414874fc6fd08e3c522bcca7f117b5a702b0c65"
+          }
+        },
+        {
+          "client_id": "836617906143-rgdas8b43p3q72fq4hk5rqemeg30rvi7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA__tha1NjIplmKm2UzGbmpxnEkr-Idhp8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "836617906143-rgdas8b43p3q72fq4hk5rqemeg30rvi7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item android:title="Products">
+        <menu>
+            <item
+                android:id="@+id/nav_add_product"
+                android:title="Add Product" />
+            <item
+                android:id="@+id/nav_manage_product"
+                android:title="Manage Product"/>
+        </menu>
+        </item>
+
+        <item android:title="Inventory ">
+            <menu>
+                <item
+                    android:id="@+id/nav_update_stock"
+                    android:title="Update Stock" />
+                <item
+                    android:id="@+id/nav_manage_stock"
+                    android:title="Manage Stock" />
+            </menu>
+        </item>
+
+    <item android:title="Sales">
+        <menu>
+            <item
+                android:id="@+id/nav_bills"
+                android:title="View Bills" />
+            <item
+                android:id="@+id/nav_total_sales"
+                android:title="View Total Sales" />
+        </menu>
+    </item>
+
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:title="About Us" />
+            <item
+                android:id="@+id/nav_send"
+                android:title="Send Feedback" />
+        </menu>
+    </item>
+
+</menu>
