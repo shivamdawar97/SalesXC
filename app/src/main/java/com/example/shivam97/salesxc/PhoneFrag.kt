@@ -4,7 +4,6 @@ package com.example.shivam97.salesxc
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
-import android.support.constraint.Constraints.INVISIBLE
 import android.support.constraint.Constraints.TAG
 import android.support.v4.app.Fragment
 import android.text.TextUtils
@@ -15,8 +14,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import com.google.firebase.auth.PhoneAuthProvider
-import kotlinx.android.synthetic.main.fragment_first.*
-import kotlinx.android.synthetic.main.fragment_first.view.*
+import kotlinx.android.synthetic.main.f_phone.*
+import kotlinx.android.synthetic.main.f_phone.view.*
 import java.util.concurrent.TimeUnit
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -24,7 +23,7 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.example.shivam97.salesxc.SalesXC.mAuth
 
-class FirstFragment : Fragment() {
+class PhoneFrag : Fragment() {
     lateinit var v: View
     private lateinit var mCallbacks :PhoneAuthProvider.OnVerificationStateChangedCallbacks
     lateinit var mVerificationId: String
@@ -33,7 +32,7 @@ class FirstFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_first, container, false)
+        val view = inflater.inflate(R.layout.f_phone, container, false)
         v=view
 
         mCallbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {

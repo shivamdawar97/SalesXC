@@ -1,54 +1,61 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.shivam97.salesxc.RegisterFragment">
-
-
-    <LinearLayout
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="com.example.shivam97.salesxc.RegisterFrag"
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:weightSum="10"
+        android:layout_margin="20dp"
+        android:layout_height="wrap_content">
 
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:padding="10dp"
         android:layout_height="wrap_content">
 
         <android.support.design.widget.TextInputEditText
+            android:id="@+id/company_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
             android:hint="Company Name" />
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <android.support.design.widget.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="GST Number" />
-    </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:padding="10dp"
         android:layout_height="wrap_content">
 
         <android.support.design.widget.TextInputEditText
+            android:id="@+id/owner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="C" />
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:hint="Owner Name" />
     </android.support.design.widget.TextInputLayout>
-
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:padding="10dp"
         android:layout_height="wrap_content">
 
         <android.support.design.widget.TextInputEditText
+            android:id="@+id/gst"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="C" />
+            android:inputType="textPersonName"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:hint="GSTIN" />
     </android.support.design.widget.TextInputLayout>
+
     </LinearLayout>
-</FrameLayout>
+
