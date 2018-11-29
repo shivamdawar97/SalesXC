@@ -38,19 +38,19 @@
         android:layout_marginBottom="8dp"
         android:text="Company  Username"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@id/editText"
+        app:layout_constraintBottom_toTopOf="@id/edit_username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.177"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/edit_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="50dp"
-        android:background="@drawable/round_bg"
+        android:background="@drawable/round_edit"
         android:drawableStart="@drawable/ic_factory"
         android:drawablePadding="5dp"
         android:ems="10"
@@ -62,28 +62,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-
     <TextView
         android:id="@+id/text5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Key"
+        android:text="Pass Key"
         android:textColor="@color/white"
         android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toTopOf="@id/editText2"
+        app:layout_constraintBottom_toTopOf="@id/edit_passkey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/edit_passkey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="50dp"
-        android:background="@drawable/round_bg"
+        android:background="@drawable/round_edit"
         android:drawableStart="@drawable/ic_key"
         android:ems="10"
         android:inputType="textPassword"
@@ -92,7 +91,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_username" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardLogIn"
@@ -106,7 +105,7 @@
         android:layout_marginEnd="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2"
+        app:layout_constraintTop_toBottomOf="@+id/edit_passkey"
         app:layout_constraintBottom_toTopOf="@+id/create">
 
         <TextView

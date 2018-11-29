@@ -13,5 +13,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="chage">You might receive an SMS message for verification and standard rates apply.</string>
-    <string name="otp">Enter OTP</string>
+    <string name="otp">Enter six digit OTP</string>
+    <string name="username">Select a Company Username and LogIn Key</string>
+
+
 </resources>

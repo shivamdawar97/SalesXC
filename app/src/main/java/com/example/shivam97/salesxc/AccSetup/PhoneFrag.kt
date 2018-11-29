@@ -1,10 +1,8 @@
-package com.example.shivam97.salesxc
+package com.example.shivam97.salesxc.AccSetup
 
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Bundle
-import android.support.constraint.Constraints.TAG
 import android.support.v4.app.Fragment
 import android.text.TextUtils
 import android.util.Log
@@ -13,21 +11,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import com.example.shivam97.salesxc.R
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.android.synthetic.main.f_phone.*
 import kotlinx.android.synthetic.main.f_phone.view.*
-import java.util.concurrent.TimeUnit
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.example.shivam97.salesxc.SalesXC.mAuth
+import com.example.shivam97.salesxc.SalesXC.mUser
+import com.google.firebase.auth.AuthCredential
 
 class PhoneFrag : Fragment() {
-    lateinit var v: View
+    private lateinit var v: View
+    lateinit var phoneNumber:String
     private lateinit var mCallbacks :PhoneAuthProvider.OnVerificationStateChangedCallbacks
     lateinit var mVerificationId: String
-    lateinit var btn: Button
+    val TAG="MyPhoneAuth"
+    lateinit var b:Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -37,7 +39,6 @@ class PhoneFrag : Fragment() {
 
         mCallbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
-
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
                 // This callback will be invoked in two situations:
                 // 1 - Instant verification. In some cases the phone number can be instantly
@@ -46,6 +47,7 @@ class PhoneFrag : Fragment() {
                 //     detect the incoming verification SMS and perform verification without
                 //     user action.
                 Log.d(TAG, "onVerificationCompleted:$credential")
+                v.progress_circular.visibility = View.INVISIBLE
 
 //                Toast.makeText(context,"number verified",Toast.LENGTH_LONG).show()
 //                signInWithPhoneAuthCredential(credential)
@@ -55,14 +57,19 @@ class PhoneFrag : Fragment() {
                 // This callback is invoked in an invalid request for verification is made,
                 // for instance if the the phone number format is not valid.
                 Log.w(TAG, "onVerificationFailed", e)
-
+                Log.i(TAG,e.message)
                 if (e is FirebaseAuthInvalidCredentialsException) {
                     // Invalid request
+                    Log.i(TAG,"invalid request")
+                    e.printStackTrace()
                     // ...
                 } else if (e is FirebaseTooManyRequestsException) {
                     // The SMS quota for the project has been exceeded
+                    Log.i(TAG,"for project exceeded")
+                    e.printStackTrace()
                     // ...
                 }
+                v.progress_circular.visibility = View.INVISIBLE
 
                 // Show a message and update the UI
                 // ...
@@ -79,18 +86,10 @@ class PhoneFrag : Fragment() {
                  val credential = PhoneAuthProvider.getCredential(verificationId, token.toString())
                 signInWithPhoneAuthCredential(credential)*/
 
-
                 mVerificationId=verificationId!!
                 // Save verification ID and resending token so we can use them later
-                v.top_view.text="Enter OTP for verification"
-                v.country_code.visibility= View.INVISIBLE
-                v.warning_view.text="Enter six digit verification code"
-                btn.isEnabled=true
-                btn.setBackgroundColor(0)
-                editNumber.text=null
-                editNumber.isEnabled=true
-                btn.text="Submit"
-
+                otp_layout.visibility=View.VISIBLE
+                phone_layout.visibility=View.GONE
             }
 
 
@@ -98,49 +97,59 @@ class PhoneFrag : Fragment() {
         return view
     }
 
-    fun goNext(btn:Button) {
+     fun goNext(b:Button) {
 
-
-        var phoneNumber: String = editNumber.text.toString()
+        phoneNumber = editNumber.text.toString()
         v.progress_circular.visibility = View.VISIBLE
-        editNumber.isEnabled = false
-        this.btn=btn
+         this.b=b
 
         if (!TextUtils.isEmpty(phoneNumber)) {
             phoneNumber = "+91$phoneNumber"
-
-            PhoneAuthProvider.getInstance().verifyPhoneNumber(
+            val act=activity as SetupPagersAct
+            act.pager.currentItem+=1
+            act.pager.setCurrentItem(act.pager.currentItem,true)
+          /*  PhoneAuthProvider.getInstance().verifyPhoneNumber(
                     phoneNumber,        // Phone number to verify
                     60,                 // Timeout duration
                     TimeUnit.SECONDS,   // Unit of timeout
                     context as Activity,               // Activity (for callback binding)
-                    mCallbacks)     // OnVerificationStateChangedCallbacks
+                    mCallbacks)     // OnVerificationStateChangedCallbacks*/
         }
 
-        btn.setOnClickListener {
-            val code = editNumber.text.toString()
+    /*    b.setOnClickListener {
+
+            val code = edit_otp.text.toString()
             if (!TextUtils.isEmpty(code)) {
+                v.progress_circular.visibility = View.VISIBLE
+
                 val credential = PhoneAuthProvider.getCredential(mVerificationId, code)
                 signInWithPhoneAuthCredential(credential)
 
             }
-        }
+        }*/
+
+
     }
 
-    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
+    private fun signInWithPhoneAuthCredential(credential: AuthCredential) {
 
         mAuth.signInWithCredential(credential).addOnCompleteListener {task ->
+            v.progress_circular.visibility = View.INVISIBLE
+
             if (task.isSuccessful){
+                val act=activity as SetupPagersAct
                 // Sign in success, update UI with the signed-in user's information
                 Log.d(TAG, "signInWithCredential:success")
                 val user = task.result?.user
-                Toast.makeText(activity,"SignIn Successful",Toast.LENGTH_LONG).show()
-                v.progress_circular.visibility=View.INVISIBLE
-
+                mUser=user
+                Toast.makeText(act,"Number Verified",Toast.LENGTH_LONG).show()
+                act.credential=credential
+                act.pager.currentItem+=1
+                act.pager.setCurrentItem(act.pager.currentItem,true)
             }
+
             else{
                 // Sign in failed, display a message and update the UI
-                v.progress_circular.visibility=View.INVISIBLE
                 Log.w(TAG, "signInWithCredential:failure", task.exception)
                 if (task.exception is FirebaseAuthInvalidCredentialsException) {
                     // The verification code entered was invalid
