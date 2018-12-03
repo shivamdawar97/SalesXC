@@ -3,6 +3,7 @@ package com.example.shivam97.salesxc;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.shivam97.salesxc.roomClasses.Repository;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -11,6 +12,7 @@ public class SalesXC extends Application {
    public static FirebaseAuth mAuth;
    public static FirebaseUser mUser;
    public FirebaseFirestore firestore;
+   public static Repository repository;
 
    private static SalesXC INSTANCE=null;
     @Override
@@ -18,6 +20,7 @@ public class SalesXC extends Application {
         super.onCreate();
         mAuth=FirebaseAuth.getInstance();
         firestore=FirebaseFirestore.getInstance();
+        repository=new Repository(this);
     }
 
     public static SalesXC getINSTANCE() {

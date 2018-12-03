@@ -8,11 +8,21 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.FrameLayout
+import android.widget.Toast
+import com.example.shivam97.salesxc.Management.AddProduct
+import com.example.shivam97.salesxc.SalesXC.repository
 import kotlinx.android.synthetic.main.a_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+     var totalPrice:Float = 0.0f
+    companion object {
+        var priceList: ArrayList<Float> = ArrayList()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,23 +34,60 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
-
-
         nav_view.setNavigationItemSelectedListener(this)
-        main_recycler.adapter=RecyclerAdapter(this)
+        val adapter=RecyclerAdapter(this,ArrayList(), ArrayList(),ArrayList(),ArrayList())
+        main_recycler.adapter=adapter
         main_recycler.layoutManager=LinearLayoutManager(this)
-        fab.setOnClickListener { view ->
-            (main_recycler.adapter as RecyclerAdapter).increaseInt()
+
+        fab.setOnClickListener {
+
+            val scanner=BarcodeScanner(this@MainActivity)
+            (scanner_frame as FrameLayout).addView(scanner)
+        scanner_frame.visibility= View.VISIBLE
+        scanner.scan(object :BarcodeScanner.ScannerCallback{
+            override fun barcodeScanned(code: String?) {
+
+                (scanner_frame as FrameLayout).removeAllViews()
+                val p= repository.getProduct(code) ?: return
+                adapter.addItem(p.uniqueId,p.name,p.selling,""+0)
+               /* val alertDialog=AlertDialog.Builder(this@MainActivity)
+                alertDialog.setTitle(p.name)
+                alertDialog.setMessage("Quantity:")
+                val editText=EditText(this@MainActivity)
+                editText.inputType=InputType.TYPE_CLASS_NUMBER
+                alertDialog.setView(editText)
+                alertDialog.setPositiveButton("Add") { p0, _ ->
+                   val qty=editText.text.toString()
+                    if(!qty.isEmpty())
+                    {   adapter.addItem(p.uniqueId,p.name,p.selling,qty)
+                        p0.dismiss()
+                    }
+
+                }
+                alertDialog.setNegativeButton("Cancel"){p0,_->
+                    p0.dismiss()
+                }
+                alertDialog.show()*/
+
+            }
+            override fun scannerFailed(message: String?) {
+            }
+        },scanner_frame as FrameLayout)
         }
 
-        startActivity( Intent(this,LogInActivity::class.java))
     }
 
+
     override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
+        when {
+
+            drawer_layout.isDrawerOpen(GravityCompat.START) ->
+                drawer_layout.closeDrawer(GravityCompat.START)
+
+            scanner_frame.visibility==View.VISIBLE ->
+                scanner_frame.visibility=View.GONE
+
+            else -> super.onBackPressed()
         }
     }
 
@@ -65,6 +112,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.nav_add_product -> {
                 // Handle the camera action
+                startActivity(Intent(baseContext,AddProduct::class.java))
             }
             R.id.nav_manage_product -> {
 
@@ -86,4 +134,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
+    fun onPriceListUpdated(){
+        Toast.makeText(this@MainActivity,"called",Toast.LENGTH_LONG).show()
+    }
+
 }

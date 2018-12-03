@@ -101,7 +101,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/home/shivam97/Downloads/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/communication/ic_phone_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/home/shivam97/Downloads/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/hardware/ic_keyboard_arrow_left_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -111,8 +111,12 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_phone_black_24dp" />
+                            <entry key="color" value="ffffff" />
+                            <entry key="height" value="44" />
+                            <entry key="outputName" value="ic_keyboard_arrow_left_black_24dp" />
+                            <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="$PROJECT_DIR$/../key.svg" />
+                            <entry key="width" value="44" />
                           </map>
                         </option>
                       </PersistentState>

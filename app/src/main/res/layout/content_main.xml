@@ -91,16 +91,17 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Total Amount"
+            android:text="Total Amount:"
             android:textColor="@color/white" />
 
         <TextView
+            android:id="@+id/amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Price"
+            android:text="Amount"
             android:textColor="@color/white" />
     </LinearLayout>
 
@@ -113,4 +114,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <FrameLayout
+        android:id="@+id/scanner_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/linearLayout2"
+        />
+
 </android.support.constraint.ConstraintLayout>
