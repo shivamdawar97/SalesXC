@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.shivam97.salesxc.Management.AddProduct">
+    tools:context="com.example.shivam97.salesxc.management.AddProduct">
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/tvTitle"
@@ -91,13 +91,26 @@
                 android:layout_marginEnd="20dp"
                 android:textAllCaps="false"/>
 
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Stock Available:"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="20dp"
+                />
+            <EditText
+                android:id="@+id/stock_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="number"
+                />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Purchasing Price:"
                 android:textStyle="bold"
-                android:layout_marginTop="20dp"
+
                 android:textSize="16sp"
                 />
             <EditText
@@ -110,7 +123,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Selling Price:"
+                android:text="Selling Price (per unit):"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 />
@@ -121,19 +134,69 @@
                 android:inputType="textPersonName|number"
                 />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Stock Available:"
+                android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Stock Expiry date: "
                 android:textStyle="bold"
                 android:textSize="16sp"
                 />
-            <EditText
-                android:id="@+id/stock_edit"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="number"
+
+            <TextView
+                android:id="@+id/date_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Never"
+                android:layout_marginStart="20dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginBottom="5dp"
                 />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/expiry_date_checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Never"
+                android:checked="true"
+                android:textSize="18sp"
+                android:onClick="setExpiryNever"
+                android:layout_marginTop="5dp"
+                android:buttonTint="@color/colorPrimaryDark"
+                />
+
+
+            <TextView
+                android:id="@+id/select_date_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Date"
+                android:textAllCaps="false"
+                android:padding="8dp"
+                android:textSize="14sp"
+                android:textColor="@android:color/white"
+                android:background="@color/colorPrimaryDark"
+                android:onClick="selectDate"
+                android:layout_marginStart="20dp"/>
+
+
+            </LinearLayout>
+
+
         </LinearLayout>
     </ScrollView>
 
@@ -155,9 +218,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/save_btn"
-        >
-
-    </FrameLayout>
+        />
 
 
 </android.support.constraint.ConstraintLayout>

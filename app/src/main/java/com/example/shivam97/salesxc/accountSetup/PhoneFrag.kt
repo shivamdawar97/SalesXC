@@ -1,7 +1,8 @@
-package com.example.shivam97.salesxc.AccSetup
+package com.example.shivam97.salesxc.accountSetup
 
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.TextUtils
@@ -9,7 +10,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import com.example.shivam97.salesxc.R
 import com.google.firebase.auth.PhoneAuthProvider
@@ -22,14 +22,16 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.example.shivam97.salesxc.SalesXC.mAuth
 import com.example.shivam97.salesxc.SalesXC.mUser
 import com.google.firebase.auth.AuthCredential
+import java.util.concurrent.TimeUnit
 
 class PhoneFrag : Fragment() {
     private lateinit var v: View
     lateinit var phoneNumber:String
     private lateinit var mCallbacks :PhoneAuthProvider.OnVerificationStateChangedCallbacks
     lateinit var mVerificationId: String
-    val TAG="MyPhoneAuth"
-    lateinit var b:Button
+    private val TAG="MyPhoneAuth"
+
+    private var d:Boolean=false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -97,38 +99,39 @@ class PhoneFrag : Fragment() {
         return view
     }
 
-     fun goNext(b:Button) {
+     fun goNext() {
 
+        d=true
         phoneNumber = editNumber.text.toString()
         v.progress_circular.visibility = View.VISIBLE
-         this.b=b
 
         if (!TextUtils.isEmpty(phoneNumber)) {
             phoneNumber = "+91$phoneNumber"
             val act=activity as SetupPagersAct
             act.pager.currentItem+=1
             act.pager.setCurrentItem(act.pager.currentItem,true)
-          /*  PhoneAuthProvider.getInstance().verifyPhoneNumber(
+            PhoneAuthProvider.getInstance().verifyPhoneNumber(
                     phoneNumber,        // Phone number to verify
                     60,                 // Timeout duration
                     TimeUnit.SECONDS,   // Unit of timeout
                     context as Activity,               // Activity (for callback binding)
-                    mCallbacks)     // OnVerificationStateChangedCallbacks*/
+                    mCallbacks)     // OnVerificationStateChangedCallbacks
         }
 
-    /*    b.setOnClickListener {
+    }
 
-            val code = edit_otp.text.toString()
-            if (!TextUtils.isEmpty(code)) {
-                v.progress_circular.visibility = View.VISIBLE
+    fun getCheck():Boolean{
+        return d
+    }
+    fun signInWithPhone(){
+        val code = edit_otp.text.toString()
+        if (!TextUtils.isEmpty(code)) {
+            v.progress_circular.visibility = View.VISIBLE
 
-                val credential = PhoneAuthProvider.getCredential(mVerificationId, code)
-                signInWithPhoneAuthCredential(credential)
+            val credential = PhoneAuthProvider.getCredential(mVerificationId, code)
+            signInWithPhoneAuthCredential(credential)
 
-            }
-        }*/
-
-
+        }
     }
 
     private fun signInWithPhoneAuthCredential(credential: AuthCredential) {

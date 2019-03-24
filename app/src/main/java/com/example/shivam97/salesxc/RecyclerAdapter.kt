@@ -1,13 +1,11 @@
 package com.example.shivam97.salesxc
 
-import android.app.Activity
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
 import com.example.shivam97.salesxc.MainActivity.Companion.priceList
@@ -24,7 +22,7 @@ class RecyclerAdapter(private val ctx:Context,
 
     fun addItem(c:String,n:String,r:String,q:String){
         code.add(c);name.add(n);rate.add(r);qty.add(q)
-        this@RecyclerAdapter.notifyDataSetChanged()
+        this@RecyclerAdapter.notifyItemInserted(code.size-1)
 
     }
 
@@ -41,8 +39,8 @@ class RecyclerAdapter(private val ctx:Context,
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val p=holder.adapterPosition
-        holder.populate(code[p],name[p],rate[p],qty[p],p)
-        holder.qty?.requestFocus()
+        holder.populate(name[p],rate[p],qty[p],p)
+
         holder.remv?.setOnClickListener {
             try {
                 code.removeAt(p);name.removeAt(p);rate.removeAt(p)
@@ -56,25 +54,40 @@ class RecyclerAdapter(private val ctx:Context,
     }
 
    inner class MyViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
-        val remv = itemView?.findViewById<TextView>(R.id.item_remove)
-        val code = itemView?.findViewById<EditText>(R.id.item_code)
-        val name = itemView?.findViewById<EditText>(R.id.item_name)
-        private val rate = itemView?.findViewById<TextView>(R.id.item_rate)
-        val qty = itemView?.findViewById<EditText>(R.id.item_quantity)
-        private val price = itemView?.findViewById<TextView>(R.id.item_price)
 
-        fun populate(code1:String, name1:String,rate1:String,qty1:String,pos:Int){
+       val remv = itemView?.findViewById<TextView>(R.id.item_remove)
+       private val nameText = itemView?.findViewById<TextView>(R.id.item_name)
+       private val rateText = itemView?.findViewById<TextView>(R.id.item_rate)
+       private val qtyText = itemView?.findViewById<TextView>(R.id.item_quantity)
+       private val qtyEdit=itemView?.findViewById<EditText>(R.id.item_quantity_edit)
+       private val priceText = itemView?.findViewById<TextView>(R.id.item_price)
 
-            code?.setText(code1)
-            name?.setText(name1)
-            rate?.text = rate1
-            qty?.setText(qty1)
+        fun populate( name1:String,rate1:String,qty1:String,pos:Int){
 
-            qty?.addTextChangedListener(Watcher(pos))
+            nameText?.text = name1
+            rateText?.text = rate1
+            qtyText?.text = qty1
+
+            qtyText?.setOnClickListener {
+                qtyText.visibility=View.INVISIBLE
+                qtyEdit?.visibility=View.VISIBLE
+                qtyEdit?.requestFocus()
+            }
+
+            qtyEdit?.setOnEditorActionListener { _, actionId, _ ->
+                if(actionId ==EditorInfo.IME_ACTION_DONE){
+                    qtyText?.visibility=View.VISIBLE
+                    qtyText?.text=qtyEdit.text
+                    qty[pos]=qtyEdit.text.toString()
+                    qtyEdit.visibility=View.INVISIBLE
+
+                }
+                 false
+            }
 
             try {
                 val prc= rate1.toFloat()*qty1.toFloat()
-                price?.text=prc.toString()
+                priceText?.text=prc.toString()
                 priceList[pos]=prc
             }catch (e:NumberFormatException){
 
@@ -85,28 +98,6 @@ class RecyclerAdapter(private val ctx:Context,
 
 
 
-        }
-
-    }
-
-
-    inner class Watcher(private val position: Int) :TextWatcher{
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            try {
-                val q=p0.toString().toFloat()
-                val prc=rate[position].toFloat() * q
-                priceList[position]=prc
-                (ctx as MainActivity).onPriceListUpdated()
-            }
-            catch (e:NumberFormatException ){
-
-            }
-
-        }
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-        }
-        override fun afterTextChanged(p0: Editable?) {
         }
 
     }

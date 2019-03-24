@@ -1,4 +1,4 @@
-package com.example.shivam97.salesxc.AccSetup
+package com.example.shivam97.salesxc.accountSetup
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -6,12 +6,10 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.util.Log
-import android.widget.Button
 import android.widget.Toast
 import com.example.shivam97.salesxc.*
-import com.example.shivam97.salesxc.SalesXC.getINSTANCE
 import com.google.firebase.auth.AuthCredential
+import com.google.firebase.firestore.FirebaseFirestore
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.a_setup_pagers.*
 import java.util.*
@@ -19,7 +17,7 @@ import java.util.*
 class SetupPagersAct : AppCompatActivity() {
 
     lateinit var fragments: ArrayList<Fragment>
-     lateinit var  credential: AuthCredential
+    lateinit var  credential: AuthCredential
     private val f1= RegisterFragment()
     private val f2= PhoneFrag()
     private val f3= UsernameFrag()
@@ -35,7 +33,7 @@ class SetupPagersAct : AppCompatActivity() {
         pager.adapter=ViewPagerAdapter(supportFragmentManager)
 
         buttonNext.setOnClickListener {
-            view->
+
             val i=pager.currentItem
             when (i) {
                 0->{
@@ -46,7 +44,10 @@ class SetupPagersAct : AppCompatActivity() {
                     }
                 }
                 1->{
-                    f2.goNext(view as Button)
+                    if(!f2.getCheck())
+                        f2.goNext()
+                    else
+                        f2.signInWithPhone()
                 }
 
                 2->{
@@ -67,18 +68,15 @@ class SetupPagersAct : AppCompatActivity() {
             return fragments.size
         }
     }
+
     fun accSetup (){
         val user = HashMap<String,Any>()
-
         user["GSTIN"] = f1.gstin
         user["OwnerName"] = f1.oname
         user["PhoneNumber"] = f2.phoneNumber
         user["username"]= f3.username
 
-        for(s in user){
-            Log.i("Check Kar le",s.value.toString())
-        }
-       getINSTANCE().firestore.collection(f1.cname)
+       FirebaseFirestore.getInstance().collection(f1.cname)
                .document("details").set(user).addOnCompleteListener {
                    task->
                    if(task.isSuccessful){

@@ -1,4 +1,4 @@
-package com.example.shivam97.salesxc.AccSetup
+package com.example.shivam97.salesxc.accountSetup
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.TextUtils
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.shivam97.salesxc.R
-import com.example.shivam97.salesxc.SalesXC.mAuth
+import com.example.shivam97.salesxc.SalesXC.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import es.dmoral.toasty.Toasty
@@ -28,15 +28,19 @@ class UsernameFrag : Fragment() {
     }
 
     fun createAcc(){
+
         Toast.makeText(activity,"creating account",Toast.LENGTH_LONG).show()
         username=view.username.text.toString()
         pass=view.password.text.toString()
         confirm=view.confirm.text.toString()
+
         if( ! TextUtils.isEmpty(username) && !TextUtils.isEmpty(pass) && pass==confirm){
             if(pass.length>5){
+                showProgressDialog(context)
                 username += "@salesxc.com"
                 mAuth.createUserWithEmailAndPassword(username,pass).addOnCompleteListener {
                     result->
+                    hideProgressDialog()
                     if(result.isSuccessful){
                         (activity as SetupPagersAct).accSetup()
 //                        mAuth.currentUser?.linkWithCredential((activity as SetupPagersAct).credential)
@@ -44,7 +48,7 @@ class UsernameFrag : Fragment() {
                     else{
 
                         if(result.exception is FirebaseAuthUserCollisionException)
-                        Toasty.error(activity!!,"username already exists ",Toast.LENGTH_LONG,true).show()
+                        Toasty.error(activity!!,"Username already exists ",Toast.LENGTH_LONG,true).show()
 
                         else
                             Toasty.error(activity!!,"Error in creating Account "+

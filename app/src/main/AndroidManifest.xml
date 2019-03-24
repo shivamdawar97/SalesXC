@@ -31,7 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AccSetup.SetupPagersAct" />
+        <activity android:name=".accountSetup.SetupPagersAct" />
         <activity
             android:name=".BarcodeTest"
             android:exported="true" />
@@ -39,9 +39,15 @@
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
+        <meta-data
+            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+            android:value="barcode" />
 
-        <activity android:name=".Management.AddProduct"
-            android:exported="true"></activity>
+        <activity
+            android:name=".management.AddProduct"
+            android:exported="true" />
+        <activity android:name=".management.ProductList"></activity>
+        <activity android:name=".BarcodeScanner" />
     </application>
 
 </manifest>

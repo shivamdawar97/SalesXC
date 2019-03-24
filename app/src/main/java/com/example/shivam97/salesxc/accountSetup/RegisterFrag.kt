@@ -1,4 +1,4 @@
-package com.example.shivam97.salesxc.AccSetup
+package com.example.shivam97.salesxc.accountSetup
 
 
 import android.os.Bundle

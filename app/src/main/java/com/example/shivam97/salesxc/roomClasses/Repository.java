@@ -3,6 +3,7 @@ package com.example.shivam97.salesxc.roomClasses;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class Repository {
@@ -24,6 +25,15 @@ public class Repository {
            e.printStackTrace();
            return null;
        }
+   }
+
+   public List<Product> getAllProducts(){
+        try {
+            return new getAllProducts(productDao).execute().get();
+        }catch (InterruptedException|ExecutionException e){
+            e.printStackTrace();
+            return null;
+        }
    }
 
     private static class insertProduct extends AsyncTask<Product,Void,Void>{
@@ -54,5 +64,14 @@ public class Repository {
         }
     }
 
+    private static class getAllProducts extends AsyncTask<Void,Void,List<Product>>{
+
+        private ProductDao dao;
+        private getAllProducts(ProductDao productDao){ dao=productDao;}
+        @Override
+        protected List<Product> doInBackground(Void... voids) {
+            return dao.getAllProducts();
+        }
+    }
 
 }

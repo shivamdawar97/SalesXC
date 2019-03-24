@@ -4,8 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.shivam97.salesxc.AccSetup.SetupPagersAct
-import com.example.shivam97.salesxc.R.id.*
+import com.example.shivam97.salesxc.accountSetup.SetupPagersAct
 import com.example.shivam97.salesxc.SalesXC.mAuth
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.a_login.*
@@ -16,12 +15,18 @@ class LogInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.a_login)
 
+
+        if(mAuth.currentUser!=null){
+            startActivity(Intent(this,MainActivity::class.java))
+            finish()
+        }
+
         var s1:String ; var s2:String
         cardLogIn.setOnClickListener {
-            startActivity( Intent(this, MainActivity::class.java))
+           // startActivity( Intent(this, MainActivity::class.java))
 
-            /*
-            s1= edit_username.text.toString()
+
+       s1= edit_username.text.toString()
        s2=edit_passkey.text.toString()
 
             if(!s1.isEmpty() && !s2.isEmpty()){
@@ -30,10 +35,10 @@ class LogInActivity : AppCompatActivity() {
                     if(task.isSuccessful)
                         startActivity(Intent(baseContext,MainActivity::class.java))
                     else
-                        Toasty.error(baseContext,"Log In Failed "+task.exception?.message
+                        Toasty.error(baseContext,"Log In Failed.."+task.exception?.message
                         , Toast.LENGTH_LONG,true).show()
                 }
-            }*/
+            }
         }
 
 

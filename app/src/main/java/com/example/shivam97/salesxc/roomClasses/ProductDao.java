@@ -28,7 +28,7 @@ public interface ProductDao {
     Product getProduct(String uniqueId);
 
     @Query("select * from Products order by name ASC")
-    LiveData<List<Product>> getAllProducts();
+    List<Product> getAllProducts();
 
 
 }
