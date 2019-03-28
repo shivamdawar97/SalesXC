@@ -16,6 +16,13 @@ class LogInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.a_login)
 
+        if(mAuth.currentUser!=null)
+        {
+            startActivity(Intent(this,MainActivity::class.java))
+            finish()
+        }
+
+
         var s1:String ; var s2:String
         cardLogIn.setOnClickListener {
             startActivity( Intent(this, MainActivity::class.java))

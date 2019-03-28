@@ -10,8 +10,8 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import com.example.shivam97.salesxc.*
-import com.example.shivam97.salesxc.SalesXC.getINSTANCE
 import com.google.firebase.auth.AuthCredential
+import com.google.firebase.firestore.FirebaseFirestore
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.a_setup_pagers.*
 import java.util.*
@@ -78,17 +78,19 @@ class SetupPagersAct : AppCompatActivity() {
         for(s in user){
             Log.i("Check Kar le",s.value.toString())
         }
-       getINSTANCE().firestore.collection(f1.cname)
+        SalesXC.showProgressDialog(this)
+       FirebaseFirestore.getInstance().collection(f1.cname)
                .document("details").set(user).addOnCompleteListener {
                    task->
                    if(task.isSuccessful){
-
+                        SalesXC.hideProgressDialog()
                        Toasty.success(this@SetupPagersAct,"Account Created Successfully"
                        ,Toast.LENGTH_LONG,true).show()
                        startActivity(Intent(baseContext,MainActivity::class.java))
 
                    }
                    else{
+                       SalesXC.hideProgressDialog()
                        Toasty.error(this@SetupPagersAct,"Error : "+task.exception?.message
                                ,Toast.LENGTH_LONG,true).show()
                    }

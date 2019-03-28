@@ -15,6 +15,20 @@
         </menu>
         </item>
 
+        <item android:title="Customers">
+        <menu>
+            <item
+                android:id="@+id/nav_add_customer"
+                android:title="Add Customer" />
+            <item
+                android:id="@+id/nav_all_customers"
+                android:title="All Customers"/>
+        </menu>
+        </item>
+
+
+
+
         <item android:title="Inventory ">
             <menu>
                 <item
