@@ -1,45 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    android:layout_margin="10dp"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<android.support.v7.widget.CardView android:layout_margin="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="#66AFE9E9"
+    app:cardCornerRadius="10dp"
+    >
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        >
 
-        <EditText
-            android:id="@+id/item_code"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText
+
+        <TextView
             android:id="@+id/item_name"
             android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:ems="6"
+            android:textColor="@android:color/black"
+            android:text="First Product "
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="18sp"
+            android:layout_margin="10dp"
+            />
+
+
+
         <TextView
-            android:id="@+id/item_rate"
+            android:id="@+id/qty_tv"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="rate"
-            android:textSize="16sp"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-        <EditText
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_name"
+            android:layout_margin="10dp"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:text="Qty:"
+            />
+
+            <TextView
             android:id="@+id/item_quantity"
             android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/qty_tv"
+            app:layout_constraintTop_toBottomOf="@+id/item_name"
+            android:layout_margin="10dp"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+                android:text="20"
+            />
+
+
         <TextView
-            android:id="@+id/item_price"
+            android:id="@+id/rate_tv"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
             android:layout_weight="1"
-            android:text="price"
+            android:gravity="center"
+            android:text="rate:"
+            android:textSize="16sp"
+            android:layout_margin="10dp"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toEndOf="@id/item_quantity"
+            app:layout_constraintTop_toBottomOf="@+id/item_name"
+
+            />
+        <TextView
+            android:id="@+id/item_rate"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="20"
+            android:textSize="16sp"
+            android:layout_margin="10dp"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toEndOf="@id/rate_tv"
+            app:layout_constraintTop_toBottomOf="@+id/item_name"
+
+            />
+
+
+
+        <TextView
+            android:id="@+id/price_tv"
+            android:layout_weight="1"
+            android:text="Total:"
             android:gravity="center"
             android:textSize="16sp"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toEndOf="@id/item_rate"
+            app:layout_constraintTop_toBottomOf="@+id/item_name"
+
+            />
+
+        <TextView
+            android:id="@+id/item_price"
+            android:layout_weight="1"
+            android:text="400"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:textColor="@android:color/holo_orange_dark"
+            app:layout_constraintStart_toEndOf="@id/price_tv"
+            app:layout_constraintTop_toBottomOf="@+id/item_name"
+            />
+
+
         <TextView
             android:id="@+id/item_remove"
             android:text=" X "
@@ -47,6 +128,13 @@
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ff0000"/>
-    </LinearLayout>
+            android:textColor="#ff0000"
+            android:layout_margin="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+
+    </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

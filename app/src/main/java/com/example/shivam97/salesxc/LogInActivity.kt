@@ -3,11 +3,9 @@ package com.example.shivam97.salesxc
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.example.shivam97.salesxc.AccSetup.SetupPagersAct
-import com.example.shivam97.salesxc.R.id.*
 import com.example.shivam97.salesxc.SalesXC.mAuth
-import es.dmoral.toasty.Toasty
+import com.example.shivam97.salesxc.orderClasses.MainActivity
 import kotlinx.android.synthetic.main.a_login.*
 
 class LogInActivity : AppCompatActivity() {
@@ -18,7 +16,7 @@ class LogInActivity : AppCompatActivity() {
 
         if(mAuth.currentUser!=null)
         {
-            startActivity(Intent(this,MainActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 

@@ -1,4 +1,4 @@
-package com.example.shivam97.salesxc
+package com.example.shivam97.salesxc.orderClasses
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -11,7 +11,9 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.Toast
-import com.example.shivam97.salesxc.Management.AddProduct
+import com.example.shivam97.salesxc.BarcodeScanner
+import com.example.shivam97.salesxc.R
+import com.example.shivam97.salesxc.management.AddProduct
 import com.example.shivam97.salesxc.SalesXC.repository
 import kotlinx.android.synthetic.main.a_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -35,16 +37,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
-        val adapter=RecyclerAdapter(this,ArrayList(), ArrayList(),ArrayList(),ArrayList())
+        val adapter= RecyclerAdapter(this, ArrayList(), ArrayList(), ArrayList(), ArrayList())
         main_recycler.adapter=adapter
         main_recycler.layoutManager=LinearLayoutManager(this)
 
         fab.setOnClickListener {
 
-            val scanner=BarcodeScanner(this@MainActivity)
+            val scanner= BarcodeScanner(this@MainActivity)
             (scanner_frame as FrameLayout).addView(scanner)
         scanner_frame.visibility= View.VISIBLE
-        scanner.scan(object :BarcodeScanner.ScannerCallback{
+        scanner.scan(object : BarcodeScanner.ScannerCallback {
             override fun barcodeScanned(code: String?) {
 
                 (scanner_frame as FrameLayout).removeAllViews()
@@ -134,8 +136,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
-    fun onPriceListUpdated(){
-        Toast.makeText(this@MainActivity,"called",Toast.LENGTH_LONG).show()
-    }
+
 
 }

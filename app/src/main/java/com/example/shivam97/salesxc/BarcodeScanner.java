@@ -38,6 +38,7 @@ public class BarcodeScanner extends LinearLayout {
    public SurfaceView surfaceView;
    public BarcodeDetector detector;
    Context context;
+   private boolean isScanned=false;
 
     public interface ScannerCallback{
 
@@ -131,17 +132,19 @@ public class BarcodeScanner extends LinearLayout {
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
 
-
                 SparseArray<Barcode> barcodes  = detections.getDetectedItems();
-                if(barcodes.size()>0) {
+                if(barcodes.size()>0 && !isScanned) {
+                    isScanned=true;
                     final Barcode thisCode = barcodes.valueAt(0);
                     //callback
-                    detector.release();
                     scannerFrame.post(new Runnable() {
                        @Override
                        public void run() {
+                           detector.release();
+                           cameraSource.stop();
                            scannerFrame.setVisibility(GONE);
                            callback.barcodeScanned(thisCode.displayValue);
+
                        }
                    });
                 }

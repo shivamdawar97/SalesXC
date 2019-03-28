@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import com.example.shivam97.salesxc.*
+import com.example.shivam97.salesxc.orderClasses.MainActivity
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.firestore.FirebaseFirestore
 import es.dmoral.toasty.Toasty
@@ -86,7 +87,7 @@ class SetupPagersAct : AppCompatActivity() {
                         SalesXC.hideProgressDialog()
                        Toasty.success(this@SetupPagersAct,"Account Created Successfully"
                        ,Toast.LENGTH_LONG,true).show()
-                       startActivity(Intent(baseContext,MainActivity::class.java))
+                       startActivity(Intent(baseContext, MainActivity::class.java))
 
                    }
                    else{
