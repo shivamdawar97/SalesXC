@@ -28,8 +28,8 @@ class AddProduct : AppCompatActivity() {
   private lateinit var editPurchase: EditText
   private lateinit var editSelling: EditText
   private lateinit var editStock: EditText
-  private lateinit var scannerFrame: FrameLayout
-  private val SCANNER=1
+  private var scanning=false
+  private lateinit var scanner: BarcodeScanner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,24 +39,25 @@ class AddProduct : AppCompatActivity() {
         editPurchase = findViewById(R.id.purchase_edit)
         editSelling = findViewById(R.id.selling_edit)
         editStock = findViewById(R.id.stock_edit)
-        scannerFrame = findViewById(R.id.scanner_frame)
 
     }
 
     fun scanBarcode(view: View) {
-       val scanner=BarcodeScanner(this)
+        scanner=BarcodeScanner(this)
         scanner.startScan(object:BarcodeScanner.ScannerCallback{
-            override fun barcodeScanned(code: String?) {
+            override fun barcodeScanned(code: String) {
                 scanner.stopScanning()
                 unique_id_edit.setText(code)
             }
-
-            override fun scannerFailed(message: String?) {
-
-                Toasty.error(this@AddProduct, message!!, Toast.LENGTH_LONG).show()
+            override fun scannerFailed(message: String) {
+                Toasty.error(this@AddProduct, message, Toast.LENGTH_LONG).show()
             }
+
         })
+        scanning=true
     }
+
+
 
     fun saveProduct(view: View) {
         val name: String = editName.text.toString()
@@ -81,8 +82,8 @@ class AddProduct : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (scannerFrame.visibility == View.VISIBLE)
-            scannerFrame.visibility = View.GONE
+        if (scanning)
+          scanner.stopScanning()
         else
             super.onBackPressed()
     }

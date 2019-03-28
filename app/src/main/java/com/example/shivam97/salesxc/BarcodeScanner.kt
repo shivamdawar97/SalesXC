@@ -4,12 +4,17 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.support.constraint.ConstraintLayout
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.util.SparseArray
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
@@ -18,13 +23,21 @@ import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetectorOptions
 import java.io.IOException
 
-class BarcodeScanner(private val ctx: Context) : AlertDialog(ctx) {
+class BarcodeScanner(private val ctx: Context) : ConstraintLayout(ctx) {
     private var surfaceView: SurfaceView? = null
     private var detector: BarcodeDetector? = null
     private var cameraSource: CameraSource? = null
+    private var scannerView:View?=null
+    private var containerView:ViewGroup?=null
 
     init {
-        setContentView(R.layout.barcode_scanner)
+      scannerView= inflate(ctx,R.layout.barcode_scanner,this)
+      containerView= ((ctx as Activity).findViewById<View>(android.R.id.content) as ViewGroup).getChildAt(0) as ViewGroup
+        containerView?.addView(scannerView)
+        scannerView?.findViewById<View>(R.id.scanner_fab_close)?.setOnClickListener {
+            stopScanning()
+        }
+
     }
 
     interface ScannerCallback {
@@ -36,11 +49,11 @@ class BarcodeScanner(private val ctx: Context) : AlertDialog(ctx) {
 
     fun startScan(callback: ScannerCallback) {
 
-        val options = FirebaseVisionBarcodeDetectorOptions.Builder()
+      /*  val options = FirebaseVisionBarcodeDetectorOptions.Builder()
                 .setBarcodeFormats(
                         FirebaseVisionBarcode.FORMAT_QR_CODE,
                         FirebaseVisionBarcode.FORMAT_AZTEC)
-                .build()
+                .build()*/
 
         surfaceView = this.findViewById(R.id.sv_barcode)
         surfaceView!!.setZOrderMediaOverlay(true)
@@ -50,7 +63,7 @@ class BarcodeScanner(private val ctx: Context) : AlertDialog(ctx) {
 
         if (!detector!!.isOperational) {
             callback.scannerFailed("Sorry!,Couldn't setup the barcode detector")
-            dismiss()
+
         }
         cameraSource = CameraSource.Builder(ctx, detector!!)
                 .setRequestedPreviewSize(1920, 1024)
@@ -91,21 +104,21 @@ class BarcodeScanner(private val ctx: Context) : AlertDialog(ctx) {
                 if (barcodes.size() > 0) {
                     val thisCode = barcodes.valueAt(0)
                     //callback
+                    Toast.makeText(ctx,thisCode.displayValue,Toast.LENGTH_LONG).show()
                     callback.barcodeScanned(thisCode.displayValue)
-
                 }
 
             }
 
         })
-        show()
+
     }
 
 
     fun stopScanning() {
-        cameraSource!!.stop()
-        detector!!.release()
-        dismiss()
+        cameraSource?.stop()
+        detector?.release()
+        scannerView?.visibility= View.GONE
 
     }
 }
