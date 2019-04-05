@@ -1,8 +1,10 @@
 package com.example.shivam97.salesxc.roomClasses;
 
 import android.app.Application;
+import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class Repository {
@@ -13,9 +15,17 @@ public class Repository {
         productDao=database.productDao();
     }
 
-   public void insert(Product product){
-        new insertProduct(productDao).execute(product);
-    }
+   public boolean insert(Product product){
+       try {
+           return   new insertProduct(productDao).execute(product).get()!=null;
+       } catch (InterruptedException e) {
+           e.printStackTrace();
+           return false;
+       } catch (ExecutionException e) {
+           e.printStackTrace();
+           return false;
+       }
+   }
 
    public Product getProduct(String uid){
        try {
@@ -25,8 +35,16 @@ public class Repository {
            return null;
        }
    }
+    public LiveData<List<Product>> getAllProducts(){
+        try {
+            return new getAllProducts(productDao).execute().get();
+        }catch (InterruptedException|ExecutionException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-    private static class insertProduct extends AsyncTask<Product,Void,Void>{
+    private static class insertProduct extends AsyncTask<Product,Void,Long>{
 
         private ProductDao mProductDao;
         private insertProduct(ProductDao dao) {
@@ -34,9 +52,8 @@ public class Repository {
         }
 
         @Override
-        protected Void doInBackground(Product... products) {
-            mProductDao.insert(products[0]);
-            return null;
+        protected Long doInBackground(Product... products) {
+            return mProductDao.insert(products[0]);
         }
     }
 
@@ -54,5 +71,13 @@ public class Repository {
         }
     }
 
+    private static class getAllProducts extends AsyncTask<Void,Void,LiveData<List<Product>>>{
 
+        private ProductDao dao;
+        private getAllProducts(ProductDao productDao){ dao=productDao;}
+        @Override
+        protected LiveData<List<Product>> doInBackground(Void... voids) {
+            return dao.getAllProducts();
+        }
+    }
 }

@@ -20,6 +20,9 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".customers.AllCustomres"></activity>
+        <activity android:name=".customers.AddCustomer" />
+        <activity android:name=".management.ProductDetailsActivity" />
         <activity
             android:name=".orderClasses.MainActivity"
             android:label="@string/title_activity_main"
@@ -40,8 +43,10 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
-        <activity android:name=".management.AddProduct"
-            android:exported="true"></activity>
+        <activity
+            android:name=".management.AddProduct"
+            android:exported="true" />
+        <activity android:name=".management.ProductsList" />
     </application>
 
 </manifest>

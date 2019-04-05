@@ -13,18 +13,26 @@ import android.widget.ProgressBar;
 import com.example.shivam97.salesxc.roomClasses.Repository;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 public class SalesXC extends Application {
    public static FirebaseAuth mAuth;
    public static FirebaseUser mUser;
    public static Repository repository;
     private static AlertDialog progressDialog;
+   public static DocumentReference docReference;
+   public static ArrayList<String> customers;
     @Override
     public void onCreate() {
         super.onCreate();
+        customers=new ArrayList<>();
         mAuth=FirebaseAuth.getInstance();
         repository=new Repository(this);
+        docReference=FirebaseFirestore.getInstance().collection("test")
+                .document("shop1");
     }
 
 

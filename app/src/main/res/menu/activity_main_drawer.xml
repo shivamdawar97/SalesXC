@@ -26,20 +26,6 @@
         </menu>
         </item>
 
-
-
-
-        <item android:title="Inventory ">
-            <menu>
-                <item
-                    android:id="@+id/nav_update_stock"
-                    android:title="Update Stock" />
-                <item
-                    android:id="@+id/nav_manage_stock"
-                    android:title="Manage Stock" />
-            </menu>
-        </item>
-
     <item android:title="Sales">
         <menu>
             <item

@@ -1,4 +1,5 @@
 package com.example.shivam97.salesxc.orderClasses
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -9,12 +10,15 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.FrameLayout
-import android.widget.Toast
 import com.example.shivam97.salesxc.BarcodeScanner
 import com.example.shivam97.salesxc.R
 import com.example.shivam97.salesxc.management.AddProduct
 import com.example.shivam97.salesxc.SalesXC.repository
+import com.example.shivam97.salesxc.customers.AddCustomer
+import com.example.shivam97.salesxc.customers.AllCustomres
+import com.example.shivam97.salesxc.management.ProductsList
 import kotlinx.android.synthetic.main.a_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -77,6 +81,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         },scanner_frame as FrameLayout)
         }
 
+        FirestoreAllProducts.saveProductsToRoom()
     }
 
 
@@ -103,8 +108,35 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        if(item.itemId==R.id.action_print){
+
+        /*    val builderSingle = AlertDialog.Builder(this@MainActivity)
+            builderSingle.setTitle("Select One Name:-")
+            val arrayAdapter = ArrayAdapter<String>(this@AddOrder, android.R.layout.simple_selectable_list_item)
+
+            for ( (key,value) in item.attributes )
+            {
+                arrayAdapter.add("$key/ Rs. $value")
+            }
+
+            builderSingle.setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+            builderSingle.setAdapter(arrayAdapter) { dialog, which ->
+
+                val strName:String = keySet.elementAt(which)
+                val rate= item.attributes[strName]
+                addSimpleItem(strName,rate!!)
+                dialog.dismiss()
+            }
+
+            builderSingle.show()
+*/
+        }
+
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_print -> true
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -117,18 +149,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(Intent(baseContext,AddProduct::class.java))
             }
             R.id.nav_manage_product -> {
-
+                startActivity(Intent(baseContext,ProductsList::class.java))
             }
-            R.id.nav_update_stock -> {
 
-            }
-            R.id.nav_manage_stock -> {
-
-            }
             R.id.nav_bills -> {
 
             }
             R.id.nav_total_sales -> {
+
+            }
+
+            R.id.nav_add_customer->{
+                startActivity(Intent(baseContext,AddCustomer::class.java))
+            }
+            R.id.nav_all_customers->{
+                startActivity(Intent(baseContext,AllCustomres::class.java))
 
             }
         }

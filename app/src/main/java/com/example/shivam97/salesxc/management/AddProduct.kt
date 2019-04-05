@@ -13,15 +13,17 @@ import android.widget.Toast
 
 import com.example.shivam97.salesxc.BarcodeScanner
 import com.example.shivam97.salesxc.R
+import com.example.shivam97.salesxc.SalesXC.*
 import com.example.shivam97.salesxc.roomClasses.Product
 
 import java.io.IOException
 
 import es.dmoral.toasty.Toasty
 
-import com.example.shivam97.salesxc.SalesXC.repository
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.a_add_product.*
 import java.util.*
+import kotlin.collections.HashMap
 
 class AddProduct : AppCompatActivity() {
 
@@ -30,6 +32,7 @@ class AddProduct : AppCompatActivity() {
     private lateinit var editPurchase: EditText
     private lateinit var editSelling: EditText
     private lateinit var editStock: EditText
+    private var date="never"
     private lateinit var scannerFrame: FrameLayout
     private lateinit var scanner: BarcodeScanner
 
@@ -69,19 +72,41 @@ class AddProduct : AppCompatActivity() {
         val stock: String = editStock.text.toString()
 
         if (name.isEmpty() || uid.isEmpty() || purchase.isEmpty() || selling.isEmpty() || stock.isEmpty()) {
-
-        } else {
-            val product = Product()
+            Toast.makeText(this@AddProduct,"please fill all details",Toast.LENGTH_LONG).show()
+        }
+        else if(name.length>10){
+            Toast.makeText(this@AddProduct,"Name should not be longer than 10 character",Toast.LENGTH_LONG).show()
+        }
+        else {
+            /*val product = Product()
             product.name = name
             product.uniqueId = uid
             product.purchase = purchase
             product.selling = selling
             product.stock = stock
             repository.insert(product)
-            Toasty.success(this@AddProduct, "Product Added", Toast.LENGTH_LONG).show()
-            finish()
+            */
+            showProgressDialog(this@AddProduct)
+            val map=HashMap<String,Any>()
+            map["uid"]=uid
+            map["purchase"]=purchase.toFloat()
+            map["selling_price"]=selling.toFloat()
+            map["total_stock"]=stock.toInt()
+            val expiryMap=HashMap<String,Int>()
+            expiryMap[date]=stock.toInt()
+            map["expiry_date"]=expiryMap
+            FirebaseFirestore.getInstance().collection("test")
+                    .document("shop1").collection("Products")
+                    .document(name).set(map).addOnCompleteListener {
+                        hideProgressDialog()
+                        if(it.isSuccessful){
+                            Toasty.success(this@AddProduct, "Product Added", Toast.LENGTH_LONG).show()
+                            finish()
+                        }
+                        else
+                            Toasty.error(this@AddProduct,"Error in saving product"+it.exception?.message,Toast.LENGTH_LONG).show()
+                    }
         }
-
     }
 
     override fun onBackPressed() {
@@ -116,17 +141,20 @@ class AddProduct : AppCompatActivity() {
         val myCalendar = Calendar.getInstance()
         DatePickerDialog(this@AddProduct, DatePickerDialog.OnDateSetListener {
             p0, p1, p2, p3 ->
+            date="$p3:$p2:$p1"
             date_tv.text="$p3:${p2+1}:$p1"
             expiry_date_checkBox.isChecked=false
         }, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show()
-
     }
 
     fun setExpiryNever(view :View){
         if(expiry_date_checkBox.isChecked)
+        {
+            date="never"
             date_tv.text="Never"
+        }
         else
             selectDate(select_date_btn)
     }
