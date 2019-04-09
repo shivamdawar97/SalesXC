@@ -15,7 +15,7 @@ public class Repository {
         productDao=database.productDao();
     }
 
-   public boolean insert(Product product){
+   public boolean insertProduct(Product[] product){
        try {
            return   new insertProduct(productDao).execute(product).get()!=null;
        } catch (InterruptedException e) {
@@ -44,7 +44,7 @@ public class Repository {
         }
     }
 
-    private static class insertProduct extends AsyncTask<Product,Void,Long>{
+    private static class insertProduct extends AsyncTask<Product,Void,Long[]>{
 
         private ProductDao mProductDao;
         private insertProduct(ProductDao dao) {
@@ -52,8 +52,9 @@ public class Repository {
         }
 
         @Override
-        protected Long doInBackground(Product... products) {
-            return mProductDao.insert(products[0]);
+        protected Long[] doInBackground(Product... products) {
+            mProductDao.deleteAllProducts();
+            return  mProductDao.insert(products);
         }
     }
 
@@ -66,7 +67,6 @@ public class Repository {
 
         @Override
         protected Product doInBackground(String... strings) {
-
             return dao.getProduct(strings[0]);
         }
     }

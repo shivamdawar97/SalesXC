@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.shivam97.salesxc.roomClasses.Product;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -67,6 +68,7 @@ public class BarcodeScanner extends LinearLayout {
     public BarcodeScanner(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initiateLayout(context);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -133,7 +135,7 @@ public class BarcodeScanner extends LinearLayout {
             public void receiveDetections(Detector.Detections<Barcode> detections) {
 
                 SparseArray<Barcode> barcodes  = detections.getDetectedItems();
-                if(barcodes.size()>0 && !isScanned) {
+                if(!isScanned && barcodes.size()>0 ) {
                     isScanned=true;
                     final Barcode thisCode = barcodes.valueAt(0);
                     //callback

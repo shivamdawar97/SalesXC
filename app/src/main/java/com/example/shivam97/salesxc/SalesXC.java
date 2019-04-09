@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.shivam97.salesxc.roomClasses.Repository;
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,5 +60,10 @@ public class SalesXC extends Application {
         progressDialog.dismiss();
     }
 
+
+    public static void showToast(Context ctx,String msg)
+    {
+        Toast.makeText(ctx,msg,Toast.LENGTH_LONG).show();
+    }
 
 }

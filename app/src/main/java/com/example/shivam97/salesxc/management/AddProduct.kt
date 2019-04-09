@@ -64,6 +64,8 @@ class AddProduct : AppCompatActivity() {
         }, scannerFrame)
     }
 
+
+
     fun saveProduct(view: View) {
         val name: String = editName.text.toString()
         val uid: String = editUniqueId.text.toString()
@@ -84,7 +86,7 @@ class AddProduct : AppCompatActivity() {
             product.purchase = purchase
             product.selling = selling
             product.stock = stock
-            repository.insert(product)
+            repository.insertProduct(product)
             */
             showProgressDialog(this@AddProduct)
             val map=HashMap<String,Any>()
@@ -111,7 +113,10 @@ class AddProduct : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (scannerFrame.visibility == View.VISIBLE)
+        {
             scannerFrame.visibility = View.GONE
+            scannerFrame.removeView(scanner)
+        }
         else
             super.onBackPressed()
     }

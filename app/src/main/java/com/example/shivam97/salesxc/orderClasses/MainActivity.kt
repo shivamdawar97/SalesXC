@@ -1,36 +1,42 @@
 package com.example.shivam97.salesxc.orderClasses
-import android.app.AlertDialog
+
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.TextView
 import com.example.shivam97.salesxc.BarcodeScanner
 import com.example.shivam97.salesxc.R
 import com.example.shivam97.salesxc.management.AddProduct
 import com.example.shivam97.salesxc.SalesXC.repository
+import com.example.shivam97.salesxc.SalesXC.showToast
 import com.example.shivam97.salesxc.customers.AddCustomer
 import com.example.shivam97.salesxc.customers.AllCustomres
 import com.example.shivam97.salesxc.management.ProductsList
 import kotlinx.android.synthetic.main.a_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import java.lang.StringBuilder
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-     var totalPrice:Float = 0.0f
-    companion object {
-        var priceList: ArrayList<Float> = ArrayList()
-    }
+    lateinit var adapter:RecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.a_main)
         setSupportActionBar(toolbar)
@@ -41,7 +47,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
-        val adapter= RecyclerAdapter(this, ArrayList(), ArrayList(), ArrayList(), ArrayList())
+        adapter= RecyclerAdapter(this)
         main_recycler.adapter=adapter
         main_recycler.layoutManager=LinearLayoutManager(this)
 
@@ -52,15 +58,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         scanner_frame.visibility= View.VISIBLE
         scanner.scan(object : BarcodeScanner.ScannerCallback {
             override fun barcodeScanned(code: String?) {
-
                 (scanner_frame as FrameLayout).removeAllViews()
                 val p= repository.getProduct(code) ?: return
-                adapter.addItem(p.uniqueId,p.name,p.selling,""+0)
-               /* val alertDialog=AlertDialog.Builder(this@MainActivity)
+                val alertDialog= AlertDialog.Builder(this@MainActivity)
                 alertDialog.setTitle(p.name)
-                alertDialog.setMessage("Quantity:")
-                val editText=EditText(this@MainActivity)
-                editText.inputType=InputType.TYPE_CLASS_NUMBER
+                alertDialog.setMessage("Enter Quantity :")
+                val editText= EditText(this@MainActivity)
+                editText.inputType= InputType.TYPE_CLASS_NUMBER
                 alertDialog.setView(editText)
                 alertDialog.setPositiveButton("Add") { p0, _ ->
                    val qty=editText.text.toString()
@@ -68,12 +72,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     {   adapter.addItem(p.uniqueId,p.name,p.selling,qty)
                         p0.dismiss()
                     }
-
+                    else editText.error="Please enter quantity"
                 }
                 alertDialog.setNegativeButton("Cancel"){p0,_->
                     p0.dismiss()
                 }
-                alertDialog.show()*/
+                alertDialog.show()
 
             }
             override fun scannerFailed(message: String?) {
@@ -82,8 +86,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         FirestoreAllProducts.saveProductsToRoom()
-    }
 
+    }
 
     override fun onBackPressed() {
         when {
@@ -92,7 +96,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 drawer_layout.closeDrawer(GravityCompat.START)
 
             scanner_frame.visibility==View.VISIBLE ->
+            {
                 scanner_frame.visibility=View.GONE
+                (scanner_frame as FrameLayout).removeAllViews()
+            }
 
             else -> super.onBackPressed()
         }
@@ -110,6 +117,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // as you specify a parent activity in AndroidManifest.xml.
         if(item.itemId==R.id.action_print){
 
+            if(adapter.itemCount==0)
+            { showToast(this,"Please Add Items");return false }
+
+            val curFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+            val date =Date(System.currentTimeMillis())
+            val dateString=curFormatter.format(date)
+            val prevIntent=Intent(this@MainActivity,PreViewActivity::class.java)
+            val prevString=StringBuilder()
+            prevString.append("                     Wayne Enterprises             \n")
+            prevString.append("                           $dateString                \n")
+            prevString.append("___________________________________________\n")
+            prevString.append(adapter.getItemsAsString())
+            prevString.append("___________________________________________\n")
+            prevString.append("\n Total Amount:\t\t ${total_amount.text}")
+            prevIntent.putExtra("bill",prevString.toString())
+            startActivity(prevIntent)
         /*    val builderSingle = AlertDialog.Builder(this@MainActivity)
             builderSingle.setTitle("Select One Name:-")
             val arrayAdapter = ArrayAdapter<String>(this@AddOrder, android.R.layout.simple_selectable_list_item)
@@ -170,6 +193,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    fun updateTAmount(amt:Float){
+        total_amount.text= String.format("₹ %d",Math.round(amt))
     }
 
 

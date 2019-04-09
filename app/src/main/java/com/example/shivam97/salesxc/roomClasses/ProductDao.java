@@ -16,7 +16,10 @@ public interface ProductDao {
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long insert(Product product);
+    Long[] insert(Product... product);
+
+    @Query("Delete from Products")
+    void deleteAllProducts();
 
     @Query("Delete from Products where uniqueId=:uniqueId")
     void deleteProduct(String uniqueId);

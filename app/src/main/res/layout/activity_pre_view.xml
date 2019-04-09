@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.shivam97.salesxc.orderClasses.PreViewActivity">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:text="Bill Preview"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.007"
+        app:layout_constraintStart_toStartOf="@+id/tvTitle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        android:onClick="finish"
+        app:srcCompat="@drawable/ic_arrow_left" />
+
+
+    <TextView
+        android:id="@+id/bill_preview_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:scrollbars="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/generate_bill_btn"
+        android:layout_margin="20dp"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        />
+
+    <Button
+        android:id="@+id/generate_bill_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Generate Invoice"
+        android:layout_margin="20dp"
+        android:drawableStart="@drawable/ic_receipt"
+        android:background="@drawable/round_bg"
+        android:textColor="@android:color/holo_blue_dark"
+        android:paddingEnd="10dp"
+        android:paddingStart="5dp"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:gravity="center"
+        />
+
+    <Button
+        android:id="@+id/print_prev_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Print"
+        android:background="@drawable/round_bg"
+        android:textColor="@android:color/holo_blue_dark"
+        android:paddingEnd="10dp"
+        android:paddingStart="5dp"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:drawableStart="@drawable/ic_print"
+        android:layout_margin="20dp"
+        />
+
+
+
+
+</android.support.constraint.ConstraintLayout>

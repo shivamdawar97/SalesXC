@@ -5,6 +5,6 @@
         android:id="@+id/action_print"
         android:orderInCategory="100"
         android:title="Print"
-        android:icon="@drawable/ic_print"
+        android:icon="@drawable/ic_print_white"
         app:showAsAction="always" />
 </menu>
