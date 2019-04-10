@@ -8,13 +8,13 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Html
 import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.FrameLayout
-import android.widget.TextView
 import com.example.shivam97.salesxc.BarcodeScanner
 import com.example.shivam97.salesxc.R
 import com.example.shivam97.salesxc.management.AddProduct
@@ -62,15 +62,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val p= repository.getProduct(code) ?: return
                 val alertDialog= AlertDialog.Builder(this@MainActivity)
                 alertDialog.setTitle(p.name)
-                alertDialog.setMessage("Enter Quantity :")
+                val message= Html.fromHtml(" Enter Quantity :<br>" +
+                        "<font color='#ff0000'> Stock Available:</font>"+p.stock)
+                alertDialog.setMessage(message)
                 val editText= EditText(this@MainActivity)
                 editText.inputType= InputType.TYPE_CLASS_NUMBER
                 alertDialog.setView(editText)
                 alertDialog.setPositiveButton("Add") { p0, _ ->
                    val qty=editText.text.toString()
                     if(!qty.isEmpty())
-                    {   adapter.addItem(p.uniqueId,p.name,p.selling,qty)
-                        p0.dismiss()
+                    {   if(qty.toInt()<=p.stock.toInt())
+                            {
+                                adapter.addItem(p.uniqueId,p.name,p.selling,qty)
+                                p0.dismiss()
+                            }
+                        else editText.error="Quantity exceeds the stock available"
                     }
                     else editText.error="Please enter quantity"
                 }
@@ -83,6 +89,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun scannerFailed(message: String?) {
             }
         },scanner_frame as FrameLayout)
+
         }
 
         FirestoreAllProducts.saveProductsToRoom()
@@ -118,8 +125,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if(item.itemId==R.id.action_print){
 
             if(adapter.itemCount==0)
-            { showToast(this,"Please Add Items");return false }
-
+            {
+                showToast(this,"Please Add Items");return false }
             val curFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.US)
             val date =Date(System.currentTimeMillis())
             val dateString=curFormatter.format(date)

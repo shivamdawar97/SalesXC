@@ -78,6 +78,7 @@
         android:background="@drawable/round_bg"
         android:textColor="@android:color/holo_blue_dark"
         android:paddingEnd="10dp"
+        android:onClick="printPreview"
         android:paddingStart="5dp"
         android:textStyle="bold"
         android:textAllCaps="false"

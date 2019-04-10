@@ -94,11 +94,15 @@ class AddProduct : AppCompatActivity() {
             map["purchase"]=purchase.toFloat()
             map["selling_price"]=selling.toFloat()
             map["total_stock"]=stock.toInt()
-            val expiryMap=HashMap<String,Int>()
-            expiryMap[date]=stock.toInt()
-            map["expiry_date"]=expiryMap
-            FirebaseFirestore.getInstance().collection("test")
-                    .document("shop1").collection("Products")
+
+            if(date != "never")
+            {
+                val expiryMap=HashMap<String,Int>()
+                expiryMap[date]=stock.toInt()
+                map["expiry_date"]=expiryMap
+
+            }
+            docReference.collection("Products")
                     .document(name).set(map).addOnCompleteListener {
                         hideProgressDialog()
                         if(it.isSuccessful){
@@ -146,8 +150,10 @@ class AddProduct : AppCompatActivity() {
         val myCalendar = Calendar.getInstance()
         DatePickerDialog(this@AddProduct, DatePickerDialog.OnDateSetListener {
             p0, p1, p2, p3 ->
-            date="$p3:$p2:$p1"
             date_tv.text="$p3:${p2+1}:$p1"
+            val calendar =Calendar.getInstance()
+            calendar.set(p1,p2,p3)
+            date=calendar.timeInMillis.toString()
             expiry_date_checkBox.isChecked=false
         }, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),

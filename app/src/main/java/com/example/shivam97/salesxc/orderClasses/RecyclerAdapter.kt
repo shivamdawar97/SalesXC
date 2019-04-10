@@ -12,7 +12,9 @@ import java.lang.IndexOutOfBoundsException
 
 class RecyclerAdapter(private val ctx:Context)
     : RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>() {
-    private val orderProducts=ArrayList<OrderProducts>()
+    companion object {
+        val orderProducts=ArrayList<OrderProducts>()
+    }
     private var gTotal=0.0f
     private fun addToGTotal(amt:Float){
         gTotal = gTotal.plus(amt)

@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".orderClasses.PreViewActivity"></activity>
+        <activity android:name=".management.LineChartActivity"></activity>
+        <activity android:name=".orderClasses.PreViewActivity" />
         <activity android:name=".customers.AllCustomres" />
         <activity android:name=".customers.AddCustomer" />
         <activity android:name=".management.ProductDetailsActivity" />

@@ -1,5 +1,6 @@
 package com.example.shivam97.salesxc.management
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,9 @@ import android.view.View
 import com.example.shivam97.salesxc.R
 import com.example.shivam97.salesxc.SalesXC.docReference
 import kotlinx.android.synthetic.main.activity_product_details.*
+import java.lang.StringBuilder
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ProductDetailsActivity : AppCompatActivity() {
 
@@ -23,23 +27,27 @@ class ProductDetailsActivity : AppCompatActivity() {
             product_details_selling.text=it["selling_price"].toString()
             product_details_stock_available.text=it["total_stock"].toString()
            try {
-               var expiries=it["expiry_date"].toString()
-               expiries=expiries.replace("{","")
-               expiries=expiries.replace("}","")
-               expiries=expiries.replace("="," : ")
-               product_details_expiries.text=expiries
 
-               /*
-               expiries=expiries as Map<*, *>
-               for(e in expiries){
-                   product_details_expiries.text="${product_details_expiries.text} \n ${e.key} : ${e.value}"
-               }*/
+               val expiries= TreeMap<String,Int>(it["expiry_date"] as HashMap<String, Int>)
+               //using tree map for sorted order
+               val dateFormat=SimpleDateFormat("dd - MMM - yy")
+               val sBuilder=StringBuilder()
+               for( m in expiries){
+                   val date=dateFormat.format(m.key.toLong())
+                   sBuilder.append("${m.value} items will expire on $date")
+                   sBuilder.append("\n\n")
+               }
+               Log.i("MY_MAP",sBuilder.toString())
+               product_details_expiries.text=sBuilder.toString()
+
            }catch ( e:TypeCastException ){
                e.printStackTrace()
-               Log.e("MAP_ERROR",e.message)
+               Log.e("MY_MAP","ERROR :"+e.message)
            }
 
         }
+
+       startActivity(Intent(this,LineChartActivity::class.java))
 
     }
 
