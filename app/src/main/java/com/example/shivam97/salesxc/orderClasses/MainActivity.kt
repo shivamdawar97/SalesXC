@@ -140,29 +140,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             prevString.append("\n Total Amount:\t\t ${total_amount.text}")
             prevIntent.putExtra("bill",prevString.toString())
             startActivity(prevIntent)
-        /*    val builderSingle = AlertDialog.Builder(this@MainActivity)
-            builderSingle.setTitle("Select One Name:-")
-            val arrayAdapter = ArrayAdapter<String>(this@AddOrder, android.R.layout.simple_selectable_list_item)
 
-            for ( (key,value) in item.attributes )
-            {
-                arrayAdapter.add("$key/ Rs. $value")
-            }
-
-            builderSingle.setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }
-
-            builderSingle.setAdapter(arrayAdapter) { dialog, which ->
-
-                val strName:String = keySet.elementAt(which)
-                val rate= item.attributes[strName]
-                addSimpleItem(strName,rate!!)
-                dialog.dismiss()
-            }
-
-            builderSingle.show()
-*/
         }
 
         return when (item.itemId) {

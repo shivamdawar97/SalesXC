@@ -66,4 +66,6 @@ public class SalesXC extends Application {
         Toast.makeText(ctx,msg,Toast.LENGTH_LONG).show();
     }
 
+
+
 }
