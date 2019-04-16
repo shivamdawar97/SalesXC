@@ -1,7 +1,7 @@
 package com.example.shivam97.salesxc.orderClasses
 
 import com.example.shivam97.salesxc.SalesXC
-import com.example.shivam97.salesxc.SalesXC.customers
+import com.example.shivam97.salesxc.SalesXC.Companion.customers
 
 class FireStoreAllCustomers
 {

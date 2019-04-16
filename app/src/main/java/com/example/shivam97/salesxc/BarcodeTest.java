@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Filter;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.vision.CameraSource;
@@ -104,6 +105,8 @@ public class BarcodeTest extends AppCompatActivity {
                 ,Toast.LENGTH_LONG,true).show();
             }
         }
+
+
     }
 
     @Override

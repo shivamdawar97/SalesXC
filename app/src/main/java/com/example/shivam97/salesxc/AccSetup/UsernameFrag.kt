@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.shivam97.salesxc.R
-import com.example.shivam97.salesxc.SalesXC.mAuth
+import com.example.shivam97.salesxc.SalesXC.Companion.mAuth
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import es.dmoral.toasty.Toasty

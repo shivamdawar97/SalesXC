@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.example.shivam97.salesxc.R
-import com.example.shivam97.salesxc.SalesXC.docReference
+import com.example.shivam97.salesxc.SalesXC.Companion.docReference
 import kotlinx.android.synthetic.main.activity_product_details.*
 import java.lang.StringBuilder
 import java.text.SimpleDateFormat

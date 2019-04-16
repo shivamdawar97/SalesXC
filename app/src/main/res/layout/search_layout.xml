@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/search_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <EditText
+        android:id="@+id/search_box"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="20dp"
+        android:drawableStart="@drawable/ic_search"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textColorHint="@android:color/white"
+        android:hint="Or type here to search"
+        android:layout_height="wrap_content"
+        android:drawableTint="@android:color/white"
+        />
+
+
+
+
+</LinearLayout>

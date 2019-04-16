@@ -12,6 +12,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import com.example.shivam97.salesxc.R
+import com.example.shivam97.salesxc.SalesXC.Companion.mAuth
+import com.example.shivam97.salesxc.SalesXC.Companion.mUser
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.android.synthetic.main.f_phone.*
 import kotlinx.android.synthetic.main.f_phone.view.*
@@ -19,8 +21,6 @@ import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.PhoneAuthCredential
-import com.example.shivam97.salesxc.SalesXC.mAuth
-import com.example.shivam97.salesxc.SalesXC.mUser
 import com.google.firebase.auth.AuthCredential
 
 class PhoneFrag : Fragment() {

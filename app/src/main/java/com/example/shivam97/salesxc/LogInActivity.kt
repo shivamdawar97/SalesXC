@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.shivam97.salesxc.AccSetup.SetupPagersAct
-import com.example.shivam97.salesxc.SalesXC.mAuth
+import com.example.shivam97.salesxc.SalesXC.Companion.mAuth
 import com.example.shivam97.salesxc.orderClasses.MainActivity
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.a_login.*

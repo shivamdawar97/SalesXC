@@ -14,6 +14,9 @@ import android.widget.Toast
 import com.example.shivam97.salesxc.BarcodeScanner
 import com.example.shivam97.salesxc.R
 import com.example.shivam97.salesxc.SalesXC.*
+import com.example.shivam97.salesxc.SalesXC.Companion.docReference
+import com.example.shivam97.salesxc.SalesXC.Companion.hideProgressDialog
+import com.example.shivam97.salesxc.SalesXC.Companion.showProgressDialog
 import com.example.shivam97.salesxc.roomClasses.Product
 
 import java.io.IOException

@@ -6,7 +6,11 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.shivam97.salesxc.R
+import com.example.shivam97.salesxc.SalesXC
 import com.example.shivam97.salesxc.SalesXC.*
+import com.example.shivam97.salesxc.SalesXC.Companion.docReference
+import com.example.shivam97.salesxc.SalesXC.Companion.hideProgressDialog
+import com.example.shivam97.salesxc.SalesXC.Companion.showProgressDialog
 import com.google.firebase.firestore.DocumentReference
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_pre_view.*
@@ -43,7 +47,7 @@ class PreViewActivity : AppCompatActivity() {
                     val pDoc = collection.document(product.name)
                     val snap = transaction.get(pDoc)
                     var qty = Math.round(product.quantity)
-                    Log.e("FireStore_STUFF", "HERE1")
+
                     if (snap["expiry_date"] != null) {
                     val exMap = snap["expiry_date"] as HashMap<String, Int>
                     Log.e("FireStore_STUFF", "HERE2")
@@ -74,7 +78,9 @@ class PreViewActivity : AppCompatActivity() {
                 for(e in exList)
                     transaction.update(e.key, "expiry_date", e.value)
                 for(s in stList)
+                {
                     transaction.update(s.key,"total_stock",s.value)
+                }
 
             }.addOnCompleteListener {
                 hideProgressDialog()
@@ -85,7 +91,11 @@ class PreViewActivity : AppCompatActivity() {
                     it.exception?.printStackTrace()
                 }
                 else
+                {
                     Toasty.success(this@PreViewActivity,"updated", Toast.LENGTH_LONG).show()
+                    SalesXC.notifyProductDataChanged()
+
+                }
             }
 
 
