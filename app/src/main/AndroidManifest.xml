@@ -20,7 +20,7 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".management.LineChartActivity"></activity>
+        <activity android:name=".Bills.AllBills"></activity>
         <activity android:name=".orderClasses.PreViewActivity" />
         <activity android:name=".customers.AllCustomres" />
         <activity android:name=".customers.AddCustomer" />
@@ -29,7 +29,7 @@
             android:name=".orderClasses.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".LogInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

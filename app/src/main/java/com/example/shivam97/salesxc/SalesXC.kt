@@ -3,7 +3,6 @@ package com.example.shivam97.salesxc
 import android.app.AlertDialog
 import android.app.Application
 import android.content.Context
-import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.Log
@@ -11,14 +10,11 @@ import android.view.KeyEvent
 import android.view.WindowManager
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.example.shivam97.salesxc.orderClasses.OrderProducts
 import com.example.shivam97.salesxc.orderClasses.RecyclerAdapter
-import com.example.shivam97.salesxc.roomClasses.Product
 import com.example.shivam97.salesxc.roomClasses.Repository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
@@ -66,7 +62,7 @@ class SalesXC : Application() {
             progressDialog = builder.create()
             progressDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             progressDialog!!.setCanceledOnTouchOutside(false)
-            progressDialog!!.setOnKeyListener { dialogInterface, keyCode, keyEvent -> keyCode == KeyEvent.KEYCODE_BACK }
+            progressDialog!!.setOnKeyListener { _, keyCode, _ -> keyCode == KeyEvent.KEYCODE_BACK }
             try {
                 progressDialog!!.show()
             } catch (e: WindowManager.BadTokenException) {
@@ -83,48 +79,84 @@ class SalesXC : Application() {
             Toast.makeText(ctx, msg, Toast.LENGTH_LONG).show()
         }
 
+        fun notifyProductDataChanged(totalSale:Float) {
 
-        fun notifyProductDataChanged() {
-
+            Log.i("UpdateReport","called size:"+RecyclerAdapter.orderProducts.size)
             val collection= docReference.collection("Products")
             docReference.firestore.runTransaction {
                 transaction ->
-                val exList=HashMap<DocumentReference,HashMap<String,Int>>()
-                Log.i("UpdateReport","called size:"+RecyclerAdapter.orderProducts.size)
+                val exUpdateList=HashMap<DocumentReference,HashMap<String,Int>>()
+                val exSetList=HashMap<DocumentReference,Any>()
+                val monthList=HashMap<DocumentReference,Int>()
                 for (product in RecyclerAdapter.orderProducts){
-                    val pDoc = collection.document(product.name)
-                    val snap = transaction.get(pDoc)
+
                     val qty = Math.round(product.quantity)
-                    val sellPrice=(snap["selling_price"] as Double).toInt()
-                    val sale=sellPrice*qty
-                    val pReport=pDoc.collection("Report").document(currentMonth)
+                    val sale=Math.round(product.rate*qty)
+                    val pCollection=collection.document(product.name).collection("Report")
+                    val pReport=pCollection.document(currentMonth)
                     val snap2=transaction.get(pReport)
                     if(snap2[todayDay]!=null)
                     {
-                     val saleMap=(snap2[todayDay] as HashMap<String,Int>)
-                     saleMap["qty"]?.plus(qty)
-                     saleMap["sale"]?.plus(sale)
-                     exList[pReport]=saleMap
+                        val saleMap=(snap2[todayDay] as HashMap<String,Int>)
+                     saleMap["qty"] =if(todayDay=="01") qty  else saleMap["qty"]!!+qty
+                     saleMap["sale"]=if(todayDay=="01") sale else saleMap["sale"]!!+sale
+                     exUpdateList[pReport]=saleMap
                     }
+
                     else{
                         val saleMap=  HashMap<String,Int>()
                         saleMap["qty"]=qty
                         saleMap["sale"]=sale
-                        exList[pReport]=saleMap
                         val map=HashMap<String,Any>()
                         map[todayDay]=saleMap
-                        pReport.set(map)
+                        exSetList[pReport]=map
+                    }
+
+                    val pMReport=pCollection.document("AllMonth")
+                    val snap3=transaction.get(pMReport)
+                    if (snap3[currentMonth]!=null)
+                    {
+                        val mSale=snap3[currentMonth].toString().toInt()+sale
+                        monthList[pMReport]=mSale
                     }
                 }
 
-                for(e in exList)
+
+                val shopMonthDoc= docReference.collection("Report").document(currentMonth)
+                val snap4=transaction.get(shopMonthDoc)
+                if(snap4[todayDay]!=null)
+                {
+                    var sale=snap4[todayDay] as Double
+                    sale+=totalSale
+
+                    transaction.update(shopMonthDoc, todayDay,sale)
+                }
+
+                else{
+                    val map=HashMap<String,Float>()
+                    map[todayDay]=totalSale
+                    transaction.set(shopMonthDoc,map)
+                }
+
+               for(e in exUpdateList)
                     transaction.update(e.key, todayDay, e.value)
+
+               for(e in exSetList)
+                    transaction.set(e.key, e.value)
+
+               for(e in monthList)
+                    transaction.update(e.key, currentMonth,e.value)
+
+
             }.addOnCompleteListener {
                 RecyclerAdapter.orderProducts.clear()
                 if(!it.isSuccessful)
                 {
                     it.exception?.printStackTrace()
                     Log.i("UpdateReport","Failed :"+it.exception?.message)
+                }
+                else{
+
                 }
             }
         }

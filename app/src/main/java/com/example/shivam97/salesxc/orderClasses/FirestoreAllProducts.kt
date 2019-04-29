@@ -5,13 +5,14 @@ import com.example.shivam97.salesxc.SalesXC.Companion.docReference
 import com.example.shivam97.salesxc.SalesXC.Companion.repository
 import com.example.shivam97.salesxc.roomClasses.Product
 
-public class FirestoreAllProducts {
+ class FirestoreAllProducts {
 
     companion object {
 
         val allProducts=ArrayList<Product>()
         fun saveProductsToRoom() {
             val productDocs = docReference.collection("Products")
+
             productDocs.get().addOnSuccessListener {
                 if (it != null) {
                     val products = arrayOfNulls<Product>(it.count())

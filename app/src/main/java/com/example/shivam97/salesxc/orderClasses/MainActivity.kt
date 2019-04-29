@@ -18,6 +18,7 @@ import android.text.TextWatcher
 import android.view.*
 import android.widget.*
 import com.example.shivam97.salesxc.BarcodeScanner
+import com.example.shivam97.salesxc.Bills.AllBills
 import com.example.shivam97.salesxc.R
 import com.example.shivam97.salesxc.SalesXC.Companion.repository
 import com.example.shivam97.salesxc.SalesXC.Companion.showToast
@@ -76,6 +77,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     if(!qty.isEmpty())
                     {   if(qty.toInt()<=p.stock.toInt())
                     {
+                        add_items_tv.visibility=View.INVISIBLE
                         adapter.addItem(p.uniqueId,p.name,p.selling,qty)
                         p0.dismiss()
                     }
@@ -195,8 +197,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             prevString.append("___________________________________________\n")
             prevString.append(adapter.getItemsAsString())
             prevString.append("___________________________________________\n")
-            prevString.append("\n Total Amount:\t\t ${total_amount.text}")
+            prevString.append("\n               Sub Total:\t\t ${total_amount.text}")
             prevIntent.putExtra("bill",prevString.toString())
+            prevIntent.putExtra("total",total_amount.text.toString().replace("₹","").trim().toFloat())
             startActivity(prevIntent)
 
         }
@@ -219,7 +222,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.nav_bills -> {
-
+                startActivity(Intent(this@MainActivity, AllBills::class.java))
             }
             R.id.nav_total_sales -> {
 
@@ -238,8 +241,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    fun updateTAmount(amt:Float){
-        total_amount.text= String.format("₹ %d",Math.round(amt))
+    fun updateTAmount(amt:Int){
+        total_amount.text= String.format("₹ %d",amt)
     }
 
 
@@ -306,6 +309,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
+
+    fun onAllItemsRemoved(){
+        add_items_tv.visibility=View.VISIBLE
+    }
 
 
 }

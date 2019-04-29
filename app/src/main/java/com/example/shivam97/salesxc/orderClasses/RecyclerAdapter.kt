@@ -14,15 +14,18 @@ class RecyclerAdapter(private val ctx:Context)
     : RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>() {
     companion object {
         val orderProducts=ArrayList<OrderProducts>()
+        var total=0
     }
     private var gTotal=0.0f
     private fun addToGTotal(amt:Float){
         gTotal = gTotal.plus(amt)
-        (ctx as MainActivity).updateTAmount(gTotal)
+        total=Math.round(gTotal)
+        (ctx as MainActivity).updateTAmount(total)
     }
     private fun rmvFromGTotal(amt: Float){
         gTotal= gTotal.minus(amt)
-        (ctx as MainActivity).updateTAmount(gTotal)
+        total=Math.round(gTotal)
+        (ctx as MainActivity).updateTAmount(total)
     }
 
     fun addItem(c:String,n:String,r:String,q:String){
@@ -39,7 +42,11 @@ class RecyclerAdapter(private val ctx:Context)
     }
 
     override fun getItemCount(): Int {
-        return orderProducts.size
+        val s=orderProducts.size
+        if(s==0){
+            (ctx as MainActivity).onAllItemsRemoved()
+        }
+        return s
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -67,7 +74,7 @@ class RecyclerAdapter(private val ctx:Context)
                     notifyItemRemoved(i)
                     this@RecyclerAdapter.notifyItemRangeChanged(i,itemCount)
                 }
-                catch (e:IndexOutOfBoundsException){}
+                catch (e:IndexOutOfBoundsException){e.printStackTrace()}
             }
         }
     }

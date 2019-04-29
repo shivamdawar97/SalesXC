@@ -18,7 +18,9 @@
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
 
     <ImageView
         android:id="@+id/imageView"
@@ -35,23 +37,30 @@
         android:onClick="finish"
         app:srcCompat="@drawable/ic_arrow_left" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested_scroll_details"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:focusableInTouchMode="false"
         app:layout_constraintTop_toBottomOf="@id/tvTitle">
-
-    <LinearLayout
-        android:id="@+id/ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical">
+    <TableLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="?attr/dividerVertical"
+        android:dividerPadding="3dp"
+        android:showDividers="middle"
+        android:stretchColumns="*"
+        android:padding="10dp"
+        >
+
+        <TableRow
             android:layout_margin="10dp">
 
             <TextView
@@ -70,17 +79,11 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="20sp"
-                android:textColor="@android:color/black"
+                android:textColor="@color/colorPrimary"
                 />
 
-
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        </TableRow>
+        <TableRow>
 
             <TextView
                 android:layout_width="0dp"
@@ -98,18 +101,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textSize="20sp"
-                android:textColor="@android:color/black"
+                android:textColor="@color/colorPrimary"
                 android:layout_weight="1"/>
 
 
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
+        </TableRow>
+        <TableRow>
+        <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -118,24 +117,22 @@
                 android:gravity="center"
                 android:textColor="@android:color/black"
                 />
-
-            <TextView
+        <TextView
                 android:id="@+id/product_details_selling"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="20sp"
                 android:gravity="center"
-                android:textColor="@android:color/black"
+                android:textColor="@color/colorPrimary"
+                android:drawableStart="@drawable/ic_rupee"
+
                 />
 
 
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        </TableRow>
+        <TableRow>
 
             <TextView
                 android:layout_width="0dp"
@@ -153,19 +150,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:textColor="@android:color/black"
+                android:textColor="@color/colorPrimary"
                 android:gravity="center"
                 android:layout_weight="1"
-
+                android:drawableStart="@drawable/ic_rupee"
                 />
 
 
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        </TableRow>
+        <TableRow>
 
             <TextView
                 android:layout_width="0dp"
@@ -181,16 +175,12 @@
                 android:id="@+id/product_details_stock_available"
                 android:layout_width="0dp"
                 android:textSize="20sp"
-                android:textColor="@android:color/black"
+                android:textColor="@color/colorPrimary"
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
-
-
-
-        </LinearLayout>
-
-            <TextView
+        </TableRow>
+        <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -199,8 +189,7 @@
                 android:textColor="@android:color/black"
                 android:layout_marginTop="20dp"
                 />
-
-            <TextView
+        <TextView
                 android:id="@+id/product_details_expiries"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -211,13 +200,45 @@
                 android:background="@drawable/round_bg"
                 android:textColor="@android:color/black"/>
 
+    </TableLayout>
+
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Current Month Sales Report"
+          android:layout_gravity="center"
+          android:textSize="18sp"
+          android:textStyle="bold"
+          android:layout_marginBottom="20dp"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Date"
+          android:layout_gravity="center"
+          android:textStyle="bold"
+          android:textColor="@android:color/black"
+          />
 
 
 
+         <com.github.mikephil.charting.charts.LineChart
+             android:id="@+id/product_sales_chart"
+             android:layout_width="match_parent"
+             android:layout_height="450dp"
+             android:nestedScrollingEnabled="true"
+             >
 
-    </LinearLayout>
+         </com.github.mikephil.charting.charts.LineChart>
 
 
 
-    </ScrollView>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+
 </android.support.constraint.ConstraintLayout>

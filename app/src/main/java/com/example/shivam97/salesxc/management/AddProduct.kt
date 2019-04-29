@@ -67,8 +67,6 @@ class AddProduct : AppCompatActivity() {
         }, scannerFrame)
     }
 
-
-
     fun saveProduct(view: View) {
         val name: String = editName.text.toString()
         val uid: String = editUniqueId.text.toString()

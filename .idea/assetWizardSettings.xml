@@ -98,11 +98,11 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="height" value="512" />
-                            <entry key="outputName" value="ic_receipt" />
+                            <entry key="height" value="34" />
+                            <entry key="outputName" value="ic_rupee" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="$PROJECT_DIR$/app/src/main/res/drawable/receipt.svg" />
-                            <entry key="width" value="512" />
+                            <entry key="sourceFile" value="$PROJECT_DIR$/app/src/main/res/drawable/rupee_ic.svg" />
+                            <entry key="width" value="34" />
                           </map>
                         </option>
                       </PersistentState>

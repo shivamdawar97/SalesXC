@@ -35,14 +35,31 @@
         app:srcCompat="@drawable/ic_arrow_left" />
 
 
+    <Switch
+        android:id="@+id/gst_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="40dp"
+        android:text="GST  "
+        android:scaleX="1.5"
+        android:switchMinWidth="60dp"
+        android:thumbTint="@color/colorPrimaryDark"
+        android:scaleY="1.5"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        />
+
+
     <TextView
         android:id="@+id/bill_preview_tv"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gst_switch"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/generate_bill_btn"
         android:layout_margin="20dp"
         android:textColor="@android:color/black"
@@ -56,7 +73,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="Generate Invoice"
+        android:text="Generate PDF"
         android:layout_margin="20dp"
         android:drawableStart="@drawable/ic_receipt"
         android:background="@drawable/round_bg"
