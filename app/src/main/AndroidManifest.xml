@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.shivam97.salesxc">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
@@ -20,7 +22,8 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Bills.AllBills"></activity>
+        <activity android:name=".salesReport.ShopReport"></activity>
+        <activity android:name=".Bills.AllBills" />
         <activity android:name=".orderClasses.PreViewActivity" />
         <activity android:name=".customers.AllCustomres" />
         <activity android:name=".customers.AddCustomer" />

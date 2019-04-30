@@ -83,7 +83,7 @@ class RecyclerAdapter(private val ctx:Context)
         val itemString=StringBuilder()
         itemString.append("\n   Name     Rate          Quantity        Total\n")
         for(pdt in orderProducts)
-        itemString.append("\n   ${pdt.name}     ${pdt.rate}     X     ${pdt.quantity}       =     ${pdt.total} \n")
+        itemString.append("\n   ${pdt.name}     ${pdt.rate}     X     ${pdt.quantity}   = ${pdt.total} \n")
         return itemString.toString()
 
     }

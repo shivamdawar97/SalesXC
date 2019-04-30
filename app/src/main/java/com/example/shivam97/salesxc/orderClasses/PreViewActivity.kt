@@ -22,13 +22,23 @@ class PreViewActivity : AppCompatActivity() {
 
     private var printed=false
     private var total=0f
+    private lateinit var bluetoothPrint:  BluetoothPrint
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pre_view)
+        bluetoothPrint= BluetoothPrint(this)
+
         val billText=intent.getStringExtra("bill")
         bill_preview_tv.text=billText
         total=intent.getFloatExtra("total",0f)
+        val fromViewBills=intent.getBooleanExtra("fromViewBills",true)
+        if(fromViewBills)
+        {
+            gst_switch.visibility=View.INVISIBLE
+            printed=true
+            return
+        }
         val gst:Float= (total*5)/100
         val sBuilder=StringBuilder()
         sBuilder.append(billText)
@@ -48,7 +58,6 @@ class PreViewActivity : AppCompatActivity() {
          }
 
         }
-
     }
 
     fun finish(view: View){
@@ -139,8 +148,12 @@ class PreViewActivity : AppCompatActivity() {
 
         }
         //send print command
+        bluetoothPrint.printData(bill_preview_tv.text.toString())
+    }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        bluetoothPrint.disconnectBT()
     }
 
 }

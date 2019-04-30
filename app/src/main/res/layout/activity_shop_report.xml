@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.shivam97.salesxc.salesReport.ShopReport">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:text="Sales Report"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:contentDescription="back"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toStartOf="@+id/tvTitle"
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="finishActivity"
+        app:srcCompat="@drawable/ic_arrow_back" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Shop 1"
+                android:layout_marginStart="20dp"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:textColor="#3F3F3F"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="(Laxmi Nagar)"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:layout_marginStart="20dp"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:background="#A8A5A5"
+                android:layout_marginTop="6dp"
+                />
+
+            <Spinner
+                android:id="@+id/months_spinner"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:entries="@array/months"
+                android:dropDownWidth="100dp"
+                android:layout_marginEnd="20dp">
+
+            </Spinner>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:text="Total Sales this Month"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                />
+
+
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/total_sales_pie_chart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_margin="20dp"
+                >
+
+            </com.github.mikephil.charting.charts.PieChart>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Sale"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    />
+                <TextView
+                    android:id="@+id/total_sales_textView"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/holo_blue_dark"
+                    android:layout_height="wrap_content"
+
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Invest"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    />
+
+                <TextView
+                    android:id="@+id/total_invest_textView"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Current Month Sales"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Date"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="10dp"
+                />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/total_sales_line_chart"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:nestedScrollingEnabled="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                >
+            </com.github.mikephil.charting.charts.LineChart>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>

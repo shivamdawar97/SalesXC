@@ -28,6 +28,7 @@ import com.example.shivam97.salesxc.customers.AddCustomer
 import com.example.shivam97.salesxc.customers.AllCustomres
 import com.example.shivam97.salesxc.management.ProductsList
 import com.example.shivam97.salesxc.roomClasses.Product
+import com.example.shivam97.salesxc.salesReport.ShopReport
 import kotlinx.android.synthetic.main.a_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -225,7 +226,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(Intent(this@MainActivity, AllBills::class.java))
             }
             R.id.nav_total_sales -> {
-
+                startActivity(Intent(this@MainActivity, ShopReport::class.java))
             }
 
             R.id.nav_add_customer->{

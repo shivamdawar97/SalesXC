@@ -33,7 +33,7 @@
                 android:title="View Bills" />
             <item
                 android:id="@+id/nav_total_sales"
-                android:title="View Total Sales" />
+                android:title="Sales Report" />
         </menu>
     </item>
 

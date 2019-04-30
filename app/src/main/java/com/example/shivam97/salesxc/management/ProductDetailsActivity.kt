@@ -5,10 +5,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.widget.AdapterView
+import com.example.shivam97.salesxc.ChartAdapters.LineChartAdapter
 import com.example.shivam97.salesxc.R
+import com.example.shivam97.salesxc.SalesXC
+import com.example.shivam97.salesxc.SalesXC.Companion.currentMonth
 import com.example.shivam97.salesxc.SalesXC.Companion.docReference
+import com.example.shivam97.salesxc.SalesXC.Companion.getMonth
 import com.github.mikephil.charting.data.Entry
 import kotlinx.android.synthetic.main.activity_product_details.*
+import kotlinx.android.synthetic.main.content_main.*
 import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
@@ -16,6 +22,9 @@ import kotlin.collections.HashMap
 
 class ProductDetailsActivity : AppCompatActivity() {
 
+    private lateinit var allMonthSale: MutableMap<String, Any>
+    private lateinit var chartAdapter: LineChartAdapter
+    private lateinit var chartEntries: ArrayList<Entry>
     private var productId="0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,21 +84,61 @@ class ProductDetailsActivity : AppCompatActivity() {
             false
         }
 
-        val chartEntries=ArrayList<Entry>()
-        val chartAdapter=LineChartAdapter(product_sales_chart)
-        pDoc.collection("Report").document("Apr").get().addOnSuccessListener {snap->
-            (TreeMap<String,Any>(snap?.data!!)).forEach {
-                data ->
-            val dataMap=data.value as HashMap<String,Long>
-                val d1=data.key.toFloat()
-                val d2=dataMap["sale"]?.toFloat()!!
-                Log.i("Entries", "$d1 $d2")
-                chartEntries.add(Entry(d1,d2))
+        pDoc.collection("Report").document("AllMonth").get().addOnSuccessListener {
+            allMonthSale=it.data!!
+        }
+
+
+        months_spinner.setSelection(getMonth(currentMonth))
+        chartEntries=ArrayList()
+        chartAdapter=LineChartAdapter(product_sales_chart)
+        pDoc.collection("Report").document(currentMonth).get().addOnSuccessListener { snap->
+            if(snap.data==null)
+            {
+                total_sale_textView.text="--"
+                return@addOnSuccessListener
             }
-            Log.i("Entries",chartEntries.size.toString())
-            chartAdapter.setData(chartEntries)
+            populateChart(snap.data!!)
+            total_sale_textView.text=allMonthSale[currentMonth].toString()
+        }
+
+        months_spinner.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                pDoc.collection("Report").document(getMonth(position)).get().addOnSuccessListener {
+                    snap->
+                    if(snap.data==null)
+                    {
+                        total_sale_textView.text="--"
+                        return@addOnSuccessListener
+                    }
+                    populateChart(snap.data!!)
+                    total_sale_textView.text=allMonthSale[getMonth(position)].toString()
+
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
         }
     }
+
+    private fun populateChart(givenData: Map<String, Any>) {
+        chartEntries.clear()
+        val sortedData=TreeMap<Float,Float>()
+        (HashMap<String,Any>(givenData)).forEach {
+            data ->
+            val dataMap=data.value as HashMap<String,Long>
+            val d1=data.key.toFloat()
+            val d2=dataMap["sale"]?.toFloat()!!
+            sortedData[d1]=d2
+//            chartEntries.add(Entry(d1,d2))
+        }
+        sortedData.forEach {
+            chartEntries.add(Entry(it.key,it.value))
+        }
+        chartAdapter.setData(chartEntries)
+    }
+
 
     fun finish(v: View){
         finish()

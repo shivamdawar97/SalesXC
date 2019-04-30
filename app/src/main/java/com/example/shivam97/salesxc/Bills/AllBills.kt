@@ -74,6 +74,7 @@ class AllBills : AppCompatActivity() {
                    val prevIntent=Intent(this@AllBills,PreViewActivity::class.java)
                    prevIntent.putExtra("bill",data["data"].toString())
                    prevIntent.putExtra("total",data["amount"].toString())
+                   prevIntent.putExtra("fromViewBills",true)
                    startActivity(prevIntent)
                }
 

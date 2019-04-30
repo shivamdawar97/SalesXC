@@ -2,6 +2,7 @@ package com.example.shivam97.salesxc;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -115,5 +116,7 @@ public class BarcodeTest extends AppCompatActivity {
         detector.release();
         cameraSource.stop();
         cameraSource.release();
+
+
     }
 }
