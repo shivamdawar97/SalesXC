@@ -118,5 +118,6 @@ public class BarcodeTest extends AppCompatActivity {
         cameraSource.release();
 
 
+
     }
 }

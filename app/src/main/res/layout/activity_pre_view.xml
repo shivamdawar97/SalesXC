@@ -51,6 +51,19 @@
         android:textStyle="bold"
         />
 
+    <TextView
+        android:id="@+id/add_cus_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        android:layout_margin="30dp"
+        android:text="Select Customer"
+        android:textSize="18sp"
+        android:onClick="selectCus"
+        android:textColor="@android:color/holo_blue_dark"
+        android:padding="10dp"
+        />
 
     <TextView
         android:id="@+id/bill_preview_tv"
@@ -80,6 +93,7 @@
         android:textColor="@android:color/holo_blue_dark"
         android:paddingEnd="10dp"
         android:paddingStart="5dp"
+        android:visibility="invisible"
         android:textStyle="bold"
         android:textAllCaps="false"
         android:gravity="center"

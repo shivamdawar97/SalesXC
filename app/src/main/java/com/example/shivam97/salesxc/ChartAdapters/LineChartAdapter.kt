@@ -9,7 +9,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 
-public class LineChartAdapter(private var chart: LineChart):IAxisValueFormatter {
+class LineChartAdapter(private var chart: LineChart):IAxisValueFormatter {
     override fun getFormattedValue(value: Float, axis: AxisBase?): String {
         return "${Math.round(value)}"
     }

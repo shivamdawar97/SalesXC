@@ -22,7 +22,8 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".salesReport.ShopReport"></activity>
+        <activity android:name=".salesReport.AllReport"></activity>
+        <activity android:name=".salesReport.ShopReport" />
         <activity android:name=".Bills.AllBills" />
         <activity android:name=".orderClasses.PreViewActivity" />
         <activity android:name=".customers.AllCustomres" />

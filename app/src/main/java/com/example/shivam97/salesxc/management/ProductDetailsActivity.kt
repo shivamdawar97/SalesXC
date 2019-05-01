@@ -15,6 +15,7 @@ import com.example.shivam97.salesxc.SalesXC.Companion.getMonth
 import com.github.mikephil.charting.data.Entry
 import kotlinx.android.synthetic.main.activity_product_details.*
 import kotlinx.android.synthetic.main.content_main.*
+import java.lang.Exception
 import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
@@ -85,6 +86,7 @@ class ProductDetailsActivity : AppCompatActivity() {
         }
 
         pDoc.collection("Report").document("AllMonth").get().addOnSuccessListener {
+            if(it.data!=null)
             allMonthSale=it.data!!
         }
 
@@ -99,7 +101,13 @@ class ProductDetailsActivity : AppCompatActivity() {
                 return@addOnSuccessListener
             }
             populateChart(snap.data!!)
-            total_sale_textView.text=allMonthSale[currentMonth].toString()
+            try {
+
+                total_sale_textView.text=allMonthSale[currentMonth].toString()
+            }
+            catch (e:Exception){
+                e.printStackTrace()
+            }
         }
 
         months_spinner.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{

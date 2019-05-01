@@ -1,13 +1,17 @@
 package com.example.shivam97.salesxc.orderClasses
 
+import android.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.Toast
+import android.widget.*
 import com.example.shivam97.salesxc.R
 import com.example.shivam97.salesxc.SalesXC
 import com.example.shivam97.salesxc.SalesXC.*
+import com.example.shivam97.salesxc.SalesXC.Companion.customers
 import com.example.shivam97.salesxc.SalesXC.Companion.docReference
 import com.example.shivam97.salesxc.SalesXC.Companion.hideProgressDialog
 import com.example.shivam97.salesxc.SalesXC.Companion.showProgressDialog
@@ -32,7 +36,7 @@ class PreViewActivity : AppCompatActivity() {
         val billText=intent.getStringExtra("bill")
         bill_preview_tv.text=billText
         total=intent.getFloatExtra("total",0f)
-        val fromViewBills=intent.getBooleanExtra("fromViewBills",true)
+        val fromViewBills=intent.getBooleanExtra("fromViewBills",false)
         if(fromViewBills)
         {
             gst_switch.visibility=View.INVISIBLE
@@ -62,6 +66,44 @@ class PreViewActivity : AppCompatActivity() {
 
     fun finish(view: View){
         finish()
+    }
+
+    fun selectCus(view:View){
+
+        val alertBuilder= AlertDialog.Builder(this@PreViewActivity)
+        val dialog=layoutInflater.inflate(R.layout.confirm_order_alert, null, false)
+        val cancelBtn=dialog.findViewById<Button>(R.id.button2)
+        val listView=dialog.findViewById<ListView>(R.id._dynamic)
+
+        val search=dialog.findViewById<EditText>(R.id.search_edit_text)
+
+
+        alertBuilder.setView(dialog)
+
+        val alertDialog=alertBuilder.create()
+        cancelBtn.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        val arrayAdapter = ArrayAdapter<String>(this@PreViewActivity, android.R.layout.simple_expandable_list_item_1)
+        arrayAdapter.addAll(customers)
+        listView.adapter=arrayAdapter
+
+        search.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {}
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                arrayAdapter.filter.filter(p0.toString())
+            }
+
+        })
+
+        listView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+
+        }
+
+        alertDialog.show()
+
     }
 
     @Throws(TypeCastException::class)

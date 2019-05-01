@@ -28,6 +28,7 @@ import com.example.shivam97.salesxc.customers.AddCustomer
 import com.example.shivam97.salesxc.customers.AllCustomres
 import com.example.shivam97.salesxc.management.ProductsList
 import com.example.shivam97.salesxc.roomClasses.Product
+import com.example.shivam97.salesxc.salesReport.AllReport
 import com.example.shivam97.salesxc.salesReport.ShopReport
 import kotlinx.android.synthetic.main.a_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -137,6 +138,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         })
 
+        val headerview = nav_view.getHeaderView(0)
+        headerview.setOnClickListener {
+            startActivity(Intent(this@MainActivity,AllReport::class.java))
+        }
 
     }
 
